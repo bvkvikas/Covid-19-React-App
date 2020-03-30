@@ -10,26 +10,28 @@ import * as api from '../server/api';
 class MainDashboardComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: {} };
+    this.state = { };
   }
 
   componentDidMount() {
     const options = {
-      url: constants.URL.ALL_COUNTRIES,
+      url: constants.URL.TOTAL_CASES,
       requestType: constants.REQUEST_TYPE.GET,
     };
     this.getData(options);
   }
 
-  async getData(options) {
+  getData(options) {
     return api.makeGetAPICall(options).then((response) => {
-      this.setState({ data: response });
+      const cases = response.data;
+      this.setState({ cases });
     });
   }
 
 
   render() {
-    const { data } = this.state;
+    // eslint-disable-next-line react/destructuring-assignment
+    const { cases } = this.state;
     return (
       // eslint-disable-next-line react/jsx-filename-extension
       <div className="container-fluid">
@@ -48,7 +50,7 @@ class MainDashboardComponent extends React.Component {
             <CountryListComponent />
           </div>
           <div className="col-md-7">
-            <DataDisplayComponent data={data} />
+            <DataDisplayComponent data={cases} />
           </div>
           <div className="col-md-3">
             <FeedComponent />
