@@ -1,7 +1,7 @@
 import React from "react";
 
 const LogoComponent = () => {
-    return <svg id="Capa_1" enable-background="new 0 0 484.559 484.559" height="30"
+    return <svg id="Capa_1" enableBackground="new 0 0 484.559 484.559" height="30"
                 viewBox="0 0 484.559 484.559" width="30" xmlns="http://www.w3.org/2000/svg">
         <g>
             <g id="XMLID_107_">
