@@ -1,11 +1,14 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
+import PropTypes from 'prop-types';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CountryListComponent from './CountryListComponent';
 import DataDisplayComponent from './DataDisplayComponent';
 import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
 import * as constants from '../server/constants';
 import * as api from '../server/api';
+
 
 class MainDashboardComponent extends React.Component {
   constructor(props) {
@@ -21,11 +24,10 @@ class MainDashboardComponent extends React.Component {
     this.getData(options);
   }
 
-  getData(options) {
-    return api.makeGetAPICall(options).then((response) => {
-      const cases = response.data;
-      this.setState({ cases });
-    });
+  async getData(options) {
+    const response = await api.makeGetAPICall(options);
+    const cases = response.data;
+    this.setState({ cases });
   }
 
 
@@ -36,6 +38,7 @@ class MainDashboardComponent extends React.Component {
       // eslint-disable-next-line react/jsx-filename-extension
       <div className="container-fluid">
         <br />
+
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="#home">
             <LogoComponent />
@@ -45,20 +48,31 @@ class MainDashboardComponent extends React.Component {
           </Navbar.Brand>
         </Navbar>
         <br />
-        <div className="row">
-          <div className="col-sm-2">
-            <CountryListComponent />
+        { cases != null ? (
+          <div className="row">
+            <div className="col-sm-2">
+              <CountryListComponent />
+            </div>
+
+            <div className="col-md-7">
+              <DataDisplayComponent data={cases} />
+            </div>
+
+            <div className="col-md-3">
+              <FeedComponent />
+            </div>
           </div>
-          <div className="col-md-7">
-            <DataDisplayComponent data={cases} />
-          </div>
-          <div className="col-md-3">
-            <FeedComponent />
-          </div>
-        </div>
+        ) : <CircularProgress />}
       </div>
     );
   }
 }
 
+MainDashboardComponent.propTypes = {
+  // cases: PropTypes.number,
+};
+
+MainDashboardComponent.defaultProps = {
+  cases: 0,
+};
 export default MainDashboardComponent;
