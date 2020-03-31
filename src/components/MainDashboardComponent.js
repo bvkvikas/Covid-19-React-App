@@ -9,17 +9,16 @@ import LogoComponent from './LogoComponent';
 import * as constants from '../server/constants';
 import * as api from '../server/api';
 
-
 class MainDashboardComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { };
+    this.state = {};
   }
 
   componentDidMount() {
     const options = {
       url: constants.URL.TOTAL_CASES,
-      requestType: constants.REQUEST_TYPE.GET,
+      requestType: constants.REQUEST_TYPE.GET
     };
     this.getData(options);
   }
@@ -29,7 +28,6 @@ class MainDashboardComponent extends React.Component {
     const cases = response.data;
     this.setState({ cases });
   }
-
 
   render() {
     // eslint-disable-next-line react/destructuring-assignment
@@ -41,14 +39,12 @@ class MainDashboardComponent extends React.Component {
 
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="#home">
-            <LogoComponent />
-            {' '}
-            {'  '}
+            <LogoComponent /> {'  '}
             COVID-19
           </Navbar.Brand>
         </Navbar>
         <br />
-        { cases != null ? (
+        {cases != null ? (
           <div className="row">
             <div className="col-sm-2">
               <CountryListComponent />
@@ -62,7 +58,9 @@ class MainDashboardComponent extends React.Component {
               <FeedComponent />
             </div>
           </div>
-        ) : <CircularProgress />}
+        ) : (
+          <CircularProgress />
+        )}
       </div>
     );
   }
@@ -73,6 +71,6 @@ MainDashboardComponent.propTypes = {
 };
 
 MainDashboardComponent.defaultProps = {
-  cases: 0,
+  cases: 0
 };
 export default MainDashboardComponent;
