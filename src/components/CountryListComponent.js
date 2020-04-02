@@ -1,31 +1,15 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table';
+import List from '@material-ui/core/List';
+import CountryListItemComponent from './CountryListItemComponent';
 
-const CountryListComponent = () => (
-  // eslint-disable-next-line react/jsx-filename-extension
+const CountryListComponent = data => (
   <div>
-    <Table bordered hover variant="dark">
-      <thead>
-        <tr>
-          <th>Country</th>
-          <th>Cases</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Worldwide</td>
-          <td>123456789</td>
-        </tr>
-        <tr>
-          <td>USA</td>
-          <td>44444</td>
-        </tr>
-        <tr>
-          <td>India</td>
-          <td>78</td>
-        </tr>
-      </tbody>
-    </Table>
+    <List className='bg-dark text-light rounded' height={400} width={300}>
+      {data.data.map(row => (
+        <CountryListItemComponent key={row.country} country_info={row} />
+      ))}
+    </List>
   </div>
 );
+
 export default CountryListComponent;
