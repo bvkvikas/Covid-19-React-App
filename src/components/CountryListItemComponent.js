@@ -1,7 +1,5 @@
 import React from 'react';
-import { ListItem } from '@material-ui/core';
-import { ListItemIcon } from '@material-ui/core';
-import { ListItemText } from '@material-ui/core';
+import { ListItem, ListItemText } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
