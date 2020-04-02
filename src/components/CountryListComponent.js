@@ -4,7 +4,7 @@ import CountryListItemComponent from "./CountryListItemComponent";
 
 const CountryListComponent = data => (
   <div>
-    <List className="bg-dark text-light rounded" height={400} width={300}>
+    <List className='bg-dark text-light rounded' height={400} width={300}>
       {data.data.map(row => (
         <CountryListItemComponent key={row.country} country_info={row} />
       ))}

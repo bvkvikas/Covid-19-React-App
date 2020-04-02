@@ -19,7 +19,7 @@ const CountryListItemComponent = ({ country_info }) => {
   const classes = useStyles();
   return (
     <div>
-      <ListItem button alignItems="flex-start">
+      <ListItem button alignItems='flex-start'>
         <ListItemAvatar>
           <Avatar
             alt={country_info.country}
@@ -29,13 +29,13 @@ const CountryListItemComponent = ({ country_info }) => {
         <ListItemText
           primary={<Typography>{country_info.country}</Typography>}
           secondary={
-            <Typography variant="body2">
+            <Typography variant='body2'>
               {"Total Cases:  " + country_info.cases}
             </Typography>
           }
         />
       </ListItem>
-      <Divider variant="middle" component="li" className={classes.root} />
+      <Divider variant='middle' component='li' className={classes.root} />
     </div>
   );
 };

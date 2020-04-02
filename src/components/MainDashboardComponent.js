@@ -34,33 +34,15 @@ class MainDashboardComponent extends React.Component {
     const { cases } = this.state;
     return (
       <div>
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="#home">
+        <Navbar bg='dark' variant='dark'>
+          <Navbar.Brand href='#home'>
             <LogoComponent /> {"  "}
             COVID-19
           </Navbar.Brand>
         </Navbar>
-        <div className="container-fluid">
+        <div className='container-fluid'>
           <br />
-          {cases != null ? (
-            <Paper elevation={3}>
-              <br />
-              <div className="row">
-                <div className="col-md-2">
-                  <CountryListComponent data={cases} />
-                </div>
-                <div className="col-md-7">
-                  <DataDisplayComponent data={cases} />
-                </div>
-
-                <div className="col-md-3">
-                  <FeedComponent />
-                </div>
-              </div>
-            </Paper>
-          ) : (
-            <CircularProgress />
-          )}
+          {cases != null ? displayDashboard(cases) : <CircularProgress />}
         </div>
       </div>
     );
@@ -75,3 +57,23 @@ MainDashboardComponent.defaultProps = {
   cases: 0
 };
 export default MainDashboardComponent;
+
+function displayDashboard(cases) {
+  return (
+    <Paper elevation={3}>
+      <br />
+      <div className='row'>
+        <div className='col-md-2'>
+          <CountryListComponent data={cases} />
+        </div>
+        <div className='col-md-7'>
+          <DataDisplayComponent data={cases} />
+        </div>
+
+        <div className='col-md-3'>
+          <FeedComponent />
+        </div>
+      </div>
+    </Paper>
+  );
+}
