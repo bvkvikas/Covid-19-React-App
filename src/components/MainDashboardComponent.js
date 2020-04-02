@@ -1,14 +1,14 @@
-import React from "react";
-import Navbar from "react-bootstrap/Navbar";
-import PropTypes from "prop-types";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import CountryListComponent from "./CountryListComponent";
-import DataDisplayComponent from "./DataDisplayComponent";
-import FeedComponent from "./FeedComponent";
-import LogoComponent from "./LogoComponent";
-import * as constants from "../server/constants";
-import * as api from "../server/api";
-import Paper from "@material-ui/core/Paper";
+import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import PropTypes from 'prop-types';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import CountryListComponent from './CountryListComponent';
+import DataDisplayComponent from './DataDisplayComponent';
+import FeedComponent from './FeedComponent';
+import LogoComponent from './LogoComponent';
+import * as constants from '../server/constants';
+import * as api from '../server/api';
+import Paper from '@material-ui/core/Paper';
 
 class MainDashboardComponent extends React.Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class MainDashboardComponent extends React.Component {
       <div>
         <Navbar bg='dark' variant='dark'>
           <Navbar.Brand href='#home'>
-            <LogoComponent /> {"  "}
+            <LogoComponent /> {'  '}
             COVID-19
           </Navbar.Brand>
         </Navbar>

@@ -1,17 +1,17 @@
-import React from "react";
-import { ListItem } from "@material-ui/core";
-import { ListItemIcon } from "@material-ui/core";
-import { ListItemText } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import { ListItem } from '@material-ui/core';
+import { ListItemIcon } from '@material-ui/core';
+import { ListItemText } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: "white"
+    backgroundColor: 'white'
   }
 }));
 
@@ -30,7 +30,7 @@ const CountryListItemComponent = ({ country_info }) => {
           primary={<Typography>{country_info.country}</Typography>}
           secondary={
             <Typography variant='body2'>
-              {"Total Cases:  " + country_info.cases}
+              {'Total Cases:  ' + country_info.cases}
             </Typography>
           }
         />

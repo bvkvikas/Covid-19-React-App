@@ -1,5 +1,5 @@
-import React from "react";
-import Card from "react-bootstrap/Card";
+import React from 'react';
+import Card from 'react-bootstrap/Card';
 
 const DataDisplayComponent = data => (
   <div>
@@ -8,7 +8,7 @@ const DataDisplayComponent = data => (
       <Card.Body>
         <Card.Title>Card Title </Card.Title>
         <Card.Text>
-          {" "}
+          {' '}
           {
             //JSON.stringify(data)
           }

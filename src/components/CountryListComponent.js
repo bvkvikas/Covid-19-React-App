@@ -1,6 +1,6 @@
-import React from "react";
-import List from "@material-ui/core/List";
-import CountryListItemComponent from "./CountryListItemComponent";
+import React from 'react';
+import List from '@material-ui/core/List';
+import CountryListItemComponent from './CountryListItemComponent';
 
 const CountryListComponent = data => (
   <div>
