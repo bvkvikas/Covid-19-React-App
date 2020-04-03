@@ -69,13 +69,13 @@ class MainDashboardComponent extends Component {
     console.log(totalCases.cases);
     return (
       <div>
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="#home">
+        <Navbar bg='dark' variant='dark'>
+          <Navbar.Brand href='#home'>
             <LogoComponent />
             COVID-19
           </Navbar.Brand>
         </Navbar>
-        <div className="container-fluid">
+        <div className='container-fluid'>
           <br />
           {cases != null ? (
             displayDashboard(cases, totalCases)
@@ -112,15 +112,15 @@ function displayDashboard(cases, totalCases) {
   return (
     <Paper elevation={3}>
       <br />
-      <div className="row">
-        <div className="col-md-2">
+      <div className='row'>
+        <div className='col-md-2'>
           <CountryListComponent data={cases} />
         </div>
-        <div className="col-md-7">
+        <div className='col-md-7'>
           <DataDisplayComponent data={totalCases} />
         </div>
 
-        <div className="col-md-3">
+        <div className='col-md-3'>
           <FeedComponent />
         </div>
       </div>
