@@ -66,7 +66,6 @@ class MainDashboardComponent extends Component {
 
   render() {
     const { cases, totalCases } = this.state;
-    console.log(totalCases.cases);
     return (
       <div>
         <Navbar bg='dark' variant='dark'>
