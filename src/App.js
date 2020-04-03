@@ -8,5 +8,4 @@ const App = () => (
     <MainDashboardComponent />
   </div>
 );
-
 export default App;

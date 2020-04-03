@@ -3,16 +3,11 @@ import Card from 'react-bootstrap/Card';
 
 const DataDisplayComponent = data => (
   <div>
-    <Card bg='dark' key={1} text='white'>
+    <Card bg="dark" key={1} text="white">
       <Card.Header>Data Header</Card.Header>
       <Card.Body>
         <Card.Title>Card Title </Card.Title>
-        <Card.Text>
-          {' '}
-          {
-            //JSON.stringify(data)
-          }
-        </Card.Text>
+        <Card.Text> {JSON.stringify(data)}</Card.Text>
       </Card.Body>
     </Card>
   </div>
