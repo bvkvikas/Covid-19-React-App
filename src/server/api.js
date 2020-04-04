@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-export async function makeGetAPICall(options) 
-{
-    return await axios.get(options.url);
+export async function fetchData(url) {
+  return await axios.get(url);
 }

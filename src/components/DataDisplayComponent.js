@@ -7,12 +7,7 @@ const DataDisplayComponent = data => (
       <Card.Header>Data Header</Card.Header>
       <Card.Body>
         <Card.Title>Card Title </Card.Title>
-        <Card.Text>
-          {' '}
-          {
-            //JSON.stringify(data)
-          }
-        </Card.Text>
+        <Card.Text> {JSON.stringify(data)}</Card.Text>
       </Card.Body>
     </Card>
   </div>

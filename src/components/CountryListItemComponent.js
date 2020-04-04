@@ -28,7 +28,7 @@ const CountryListItemComponent = ({ country_info }) => {
           primary={<Typography>{country_info.country}</Typography>}
           secondary={
             <Typography variant='body2'>
-              {'Total Cases:  ' + country_info.cases}
+              {`Total Cases:  ${country_info.cases}`}
             </Typography>
           }
         />

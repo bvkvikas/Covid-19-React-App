@@ -1,48 +1,86 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Paper from '@material-ui/core/Paper';
+import Pusher from 'pusher-js';
+import dotenv from 'dotenv';
+import _ from 'lodash';
 import CountryListComponent from './CountryListComponent';
 import DataDisplayComponent from './DataDisplayComponent';
 import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
-import * as constants from '../server/constants';
-import * as api from '../server/api';
-import Paper from '@material-ui/core/Paper';
+import { EVENTS, CHANNELS, BACKEND_URL } from '../server/constants';
 
-class MainDashboardComponent extends React.Component {
+class MainDashboardComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      totalCases: {},
+      cases: []
+    };
   }
 
   componentDidMount() {
-    const options = {
-      url: constants.URL.ALL_COUNTRIES,
-      requestType: constants.REQUEST_TYPE.GET
-    };
-    this.getData(options);
+    const pusher = createPusher();
+
+    // ALL CASES DATA FETCH
+
+    this.fetchData(
+      BACKEND_URL.TOTAL_CASES,
+      'totalCases',
+      CHANNELS.TOTAL_CASES,
+      EVENTS.UPDATE_TOTAL_CASES,
+      pusher
+    );
+
+    // Countrywise CASES DATA FETCH
+    this.fetchData(
+      BACKEND_URL.COUNTRYWISE_CASES,
+      'cases',
+      CHANNELS.COUNTRYWISE_CASES,
+      EVENTS.UPDATE_COUNTRYWISE_CASES,
+      pusher
+    );
   }
 
-  async getData(options) {
-    const response = await api.makeGetAPICall(options);
-    const cases = response.data;
-    this.setState({ cases });
-  }
+  fetchData = (url, propToUpdate, channelName, eventName, pusher) => {
+    // CASES BY COUNTRY DATA FETCH
+    fetch(url)
+      .then(response => response.json())
+      .then(countryCount => {
+        this.setState({
+          [propToUpdate]: countryCount
+        });
+
+        const channel = createChannel(channelName, pusher);
+
+        channel.bind(eventName, response => {
+          this.setState({
+            [propToUpdate]: response
+          });
+        });
+      })
+      .catch(error => console.log(error));
+  };
 
   render() {
-    const { cases } = this.state;
+    const { cases, totalCases } = this.state;
     return (
       <div>
         <Navbar bg='dark' variant='dark'>
           <Navbar.Brand href='#home'>
-            <LogoComponent /> {'  '}
+            <LogoComponent />
             COVID-19
           </Navbar.Brand>
         </Navbar>
         <div className='container-fluid'>
           <br />
-          {cases != null ? displayDashboard(cases) : <CircularProgress />}
+          {cases != null ? (
+            displayDashboard(cases, totalCases)
+          ) : (
+            <CircularProgress />
+          )}
         </div>
       </div>
     );
@@ -56,9 +94,20 @@ MainDashboardComponent.propTypes = {
 MainDashboardComponent.defaultProps = {
   cases: 0
 };
-export default MainDashboardComponent;
 
-function displayDashboard(cases) {
+/// CHANGE THE APP KEY TO YOURS BEFORE RUNNING
+function createPusher() {
+  return new Pusher('YOUR PUSHER APP KEY - PUSHER_APP_KEY', {
+    cluster: 'us2',
+    encrypted: true
+  });
+}
+
+function createChannel(channelName, pusher) {
+  return pusher.subscribe(channelName);
+}
+
+function displayDashboard(cases, totalCases) {
   return (
     <Paper elevation={3}>
       <br />
@@ -67,7 +116,7 @@ function displayDashboard(cases) {
           <CountryListComponent data={cases} />
         </div>
         <div className='col-md-7'>
-          <DataDisplayComponent data={cases} />
+          <DataDisplayComponent data={totalCases} />
         </div>
 
         <div className='col-md-3'>
@@ -77,3 +126,5 @@ function displayDashboard(cases) {
     </Paper>
   );
 }
+
+export default MainDashboardComponent;
