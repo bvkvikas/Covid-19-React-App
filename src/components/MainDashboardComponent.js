@@ -11,13 +11,14 @@ import DataDisplayComponent from './DataDisplayComponent';
 import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
 import { EVENTS, CHANNELS, BACKEND_URL } from '../server/constants';
+import CountryDataComponent from './countryDataComponent';
 
 class MainDashboardComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       totalCases: {},
-      cases: []
+      cases: [],
     };
   }
 
@@ -47,21 +48,21 @@ class MainDashboardComponent extends Component {
   fetchData = (url, propToUpdate, channelName, eventName, pusher) => {
     // CASES BY COUNTRY DATA FETCH
     fetch(url)
-      .then(response => response.json())
-      .then(countryCount => {
+      .then((response) => response.json())
+      .then((countryCount) => {
         this.setState({
-          [propToUpdate]: countryCount
+          [propToUpdate]: countryCount,
         });
 
         const channel = createChannel(channelName, pusher);
 
-        channel.bind(eventName, response => {
+        channel.bind(eventName, (response) => {
           this.setState({
-            [propToUpdate]: response
+            [propToUpdate]: response,
           });
         });
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   };
 
   render() {
@@ -76,7 +77,7 @@ class MainDashboardComponent extends Component {
         </Navbar>
         <div className='container-fluid'>
           <br />
-          {cases != null ? (
+          {cases[0] != null ? (
             displayDashboard(cases, totalCases)
           ) : (
             <CircularProgress />
@@ -92,14 +93,14 @@ MainDashboardComponent.propTypes = {
 };
 
 MainDashboardComponent.defaultProps = {
-  cases: 0
+  cases: 0,
 };
 
 /// CHANGE THE APP KEY TO YOURS BEFORE RUNNING
 function createPusher() {
   return new Pusher('YOUR PUSHER APP KEY - PUSHER_APP_KEY', {
     cluster: 'us2',
-    encrypted: true
+    encrypted: true,
   });
 }
 
@@ -108,15 +109,23 @@ function createChannel(channelName, pusher) {
 }
 
 function displayDashboard(cases, totalCases) {
+  //console.log(cases[0]);
+  console.log(cases);
   return (
     <Paper elevation={3}>
       <br />
       <div className='row'>
         <div className='col-md-2'>
-          <CountryListComponent data={cases} />
+          <CountryListComponent
+            data={cases}
+            //  onSelectCountry={this.handleSelectedCountry}
+          />
         </div>
+        {/* <div className='col-md-7'>
+          <DataDisplayComponent data={cases} />
+        </div> */}
         <div className='col-md-7'>
-          <DataDisplayComponent data={totalCases} />
+          <CountryDataComponent data={cases} />
         </div>
 
         <div className='col-md-3'>
