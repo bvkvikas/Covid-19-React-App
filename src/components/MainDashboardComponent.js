@@ -116,14 +116,8 @@ function displayDashboard(cases, totalCases) {
       <br />
       <div className='row'>
         <div className='col-md-2'>
-          <CountryListComponent
-            data={cases}
-            //  onSelectCountry={this.handleSelectedCountry}
-          />
+          <CountryListComponent data={cases} />
         </div>
-        {/* <div className='col-md-7'>
-          <DataDisplayComponent data={cases} />
-        </div> */}
         <div className='col-md-7'>
           <CountryDataComponent data={cases} />
         </div>
