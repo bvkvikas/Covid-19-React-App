@@ -4,8 +4,6 @@ const REQUEST_TYPE = {
 };
 
 const URL = {
-  TWITTER_COVID19:
-    "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WHO",
   COUNTRYWISE_CASES: "https://corona.lmao.ninja/countries",
   COUNTRY: "https://corona.lmao.ninja/",
   TOTAL_CASES: "https://corona.lmao.ninja/all",

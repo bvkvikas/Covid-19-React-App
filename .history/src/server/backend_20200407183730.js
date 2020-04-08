@@ -45,7 +45,7 @@ function updateTwitterFeedData(options) {
         });
       })
       .catch((error) => console.log(error));
-  }, 12000);
+  }, 5000);
 }
 
 async function fetchTwitterFeed() {
@@ -66,7 +66,7 @@ async function fetchTwitterFeed() {
     "bOUrciPIuYOiHh769ln1oU39aLhkQ55Oc7AfgsFNHslTZ"
   );
 
-  return JSON.parse(result);
+  return result;
 }
 
 app.get("/total_cases", (req, res) => {

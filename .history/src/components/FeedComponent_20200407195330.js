@@ -18,7 +18,11 @@ const FeedComponent = (data) => (
             <small>just now</small>
           </Toast.Header>
           <Toast.Body>
-            <li>{JSON.stringify(data)}</li>
+            <li>
+              {JSON.stringify(
+                data[0] == null ? "Not data Available" : data[0].text
+              )}
+            </li>
           </Toast.Body>
         </Toast>
         <Toast className=" bg-dark text-light">

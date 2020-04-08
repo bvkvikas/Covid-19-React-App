@@ -18,7 +18,7 @@ const FeedComponent = (data) => (
             <small>just now</small>
           </Toast.Header>
           <Toast.Body>
-            <li>{JSON.stringify(data)}</li>
+            <li>{JSON.stringify(data.filter((it) => it.data.text))}</li>
           </Toast.Body>
         </Toast>
         <Toast className=" bg-dark text-light">

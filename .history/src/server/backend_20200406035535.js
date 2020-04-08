@@ -32,7 +32,7 @@ function updateData(options) {
         });
       })
       .catch((error) => console.log(error));
-  }, 5000);
+  }, 120000);
 }
 
 function updateTwitterFeedData(options) {
@@ -41,11 +41,11 @@ function updateTwitterFeedData(options) {
       .then((response) => {
         console.log(response);
         pusher.trigger(options.channel, options.event, {
-          feed: response,
+          feed: response.data,
         });
       })
       .catch((error) => console.log(error));
-  }, 12000);
+  }, 5000);
 }
 
 async function fetchTwitterFeed() {
@@ -60,13 +60,13 @@ async function fetchTwitterFeed() {
   );
   const get = promisify(oauth.get.bind(oauth));
 
-  const result = await get(
+  JSON result = await get(
     "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WHO",
     "345306559-FRfmJ2QZSJoQmjbdugiwxb2dGxXxEqprGHjbSifB",
     "bOUrciPIuYOiHh769ln1oU39aLhkQ55Oc7AfgsFNHslTZ"
   );
 
-  return JSON.parse(result);
+  return result;
 }
 
 app.get("/total_cases", (req, res) => {

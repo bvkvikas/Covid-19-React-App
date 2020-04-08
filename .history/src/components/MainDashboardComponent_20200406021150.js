@@ -75,7 +75,7 @@ class MainDashboardComponent extends Component {
   };
 
   render() {
-    const { cases, totalCases, twitterFeed } = this.state;
+    const { cases, totalCases } = this.state;
     return (
       <div>
         <Navbar bg="dark" variant="dark">
@@ -86,8 +86,8 @@ class MainDashboardComponent extends Component {
         </Navbar>
         <div className="container-fluid">
           <br />
-          {cases != null && twitterFeed[0] != undefined ? (
-            displayDashboard(cases, totalCases, twitterFeed)
+          {cases != null ? (
+            displayDashboard(cases, totalCases)
           ) : (
             <CircularProgress />
           )}
@@ -117,9 +117,7 @@ function createChannel(channelName, pusher) {
   return pusher.subscribe(channelName);
 }
 
-function displayDashboard(cases, totalCases, twitterFeed) {
-  console.log("twitterFeed", twitterFeed);
-  console.log(twitterFeed[0].text);
+function displayDashboard(cases, totalCases) {
   return (
     <Paper elevation={3}>
       <br />
@@ -132,7 +130,7 @@ function displayDashboard(cases, totalCases, twitterFeed) {
         </div>
 
         <div className="col-md-3">
-          <FeedComponent data={twitterFeed} />
+          <FeedComponent />
         </div>
       </div>
     </Paper>

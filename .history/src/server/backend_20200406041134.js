@@ -32,7 +32,7 @@ function updateData(options) {
         });
       })
       .catch((error) => console.log(error));
-  }, 5000);
+  }, 120000);
 }
 
 function updateTwitterFeedData(options) {
@@ -45,7 +45,7 @@ function updateTwitterFeedData(options) {
         });
       })
       .catch((error) => console.log(error));
-  }, 12000);
+  }, 5000);
 }
 
 async function fetchTwitterFeed() {
@@ -66,7 +66,7 @@ async function fetchTwitterFeed() {
     "bOUrciPIuYOiHh769ln1oU39aLhkQ55Oc7AfgsFNHslTZ"
   );
 
-  return JSON.parse(result);
+  return result;
 }
 
 app.get("/total_cases", (req, res) => {
@@ -102,6 +102,7 @@ app.get("/twitter_test", (req, res) => {
   const event = constants.EVENTS.UPDATE_TWITTER_COVID19;
   const options = { url, channel, event };
   fetchTwitterFeed().then((response) => {
+    console.log(response.data.text);
     res.json(response);
     updateTwitterFeedData(options);
   });

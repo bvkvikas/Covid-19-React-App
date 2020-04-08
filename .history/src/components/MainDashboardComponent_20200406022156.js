@@ -86,8 +86,8 @@ class MainDashboardComponent extends Component {
         </Navbar>
         <div className="container-fluid">
           <br />
-          {cases != null && twitterFeed[0] != undefined ? (
-            displayDashboard(cases, totalCases, twitterFeed)
+          {cases != null ? (
+            displayDashboard(cases, totalCases)
           ) : (
             <CircularProgress />
           )}
@@ -118,8 +118,6 @@ function createChannel(channelName, pusher) {
 }
 
 function displayDashboard(cases, totalCases, twitterFeed) {
-  console.log("twitterFeed", twitterFeed);
-  console.log(twitterFeed[0].text);
   return (
     <Paper elevation={3}>
       <br />

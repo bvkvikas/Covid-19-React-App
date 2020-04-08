@@ -4,8 +4,6 @@ const REQUEST_TYPE = {
 };
 
 const URL = {
-  TWITTER_COVID19:
-    "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WHO",
   COUNTRYWISE_CASES: "https://corona.lmao.ninja/countries",
   COUNTRY: "https://corona.lmao.ninja/",
   TOTAL_CASES: "https://corona.lmao.ninja/all",
@@ -21,7 +19,6 @@ const CHANNELS = {
 };
 
 const BACKEND_URL = {
-  TWITTER_FEED: "http://localhost:5000/twitter_test",
   TOTAL_CASES: "http://localhost:5000/total_cases",
   COUNTRYWISE_CASES: "http://localhost:5000/all_countries",
 };
@@ -29,7 +26,6 @@ const BACKEND_URL = {
 const EVENTS = {
   UPDATE_TOTAL_CASES: "update-total-cases",
   UPDATE_COUNTRYWISE_CASES: "update-countrywise-cases",
-  UPDATE_TWITTER_FEED: "update-twitter_feed",
 };
 
 module.exports = {

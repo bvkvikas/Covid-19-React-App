@@ -66,7 +66,7 @@ async function fetchTwitterFeed() {
     "bOUrciPIuYOiHh769ln1oU39aLhkQ55Oc7AfgsFNHslTZ"
   );
 
-  return JSON.parse(result);
+  return result;
 }
 
 app.get("/total_cases", (req, res) => {

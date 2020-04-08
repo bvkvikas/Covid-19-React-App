@@ -118,8 +118,7 @@ function createChannel(channelName, pusher) {
 }
 
 function displayDashboard(cases, totalCases, twitterFeed) {
-  console.log("twitterFeed", twitterFeed);
-  console.log(twitterFeed[0].text);
+  console.log(twitterFeed[0]);
   return (
     <Paper elevation={3}>
       <br />

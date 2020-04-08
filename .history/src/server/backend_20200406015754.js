@@ -4,6 +4,7 @@ const cors = require("cors");
 const Pusher = require("pusher");
 const axios = require("axios");
 const OAuth = require("oauth");
+const lodash = require("lodash.get");
 const { promisify } = require("util");
 const constants = require("./constants");
 
@@ -32,20 +33,20 @@ function updateData(options) {
         });
       })
       .catch((error) => console.log(error));
-  }, 5000);
+  }, 120000);
 }
 
 function updateTwitterFeedData(options) {
   setInterval(() => {
     fetchTwitterFeed()
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         pusher.trigger(options.channel, options.event, {
           feed: response,
         });
       })
       .catch((error) => console.log(error));
-  }, 12000);
+  }, 20000);
 }
 
 async function fetchTwitterFeed() {
@@ -61,12 +62,12 @@ async function fetchTwitterFeed() {
   const get = promisify(oauth.get.bind(oauth));
 
   const result = await get(
-    "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WHO",
+    "https://api.twitter.com/1.1/search/tweets.json?q=covid19",
     "345306559-FRfmJ2QZSJoQmjbdugiwxb2dGxXxEqprGHjbSifB",
     "bOUrciPIuYOiHh769ln1oU39aLhkQ55Oc7AfgsFNHslTZ"
   );
 
-  return JSON.parse(result);
+  return result;
 }
 
 app.get("/total_cases", (req, res) => {
@@ -76,7 +77,7 @@ app.get("/total_cases", (req, res) => {
   const options = { url, channel, event };
   fetchData(url)
     .then((response) => {
-      console.log(response.data.cases);
+      //console.log(response.data.cases);
       res.json(response.data);
       updateData(options);
     })
@@ -102,7 +103,9 @@ app.get("/twitter_test", (req, res) => {
   const event = constants.EVENTS.UPDATE_TWITTER_COVID19;
   const options = { url, channel, event };
   fetchTwitterFeed().then((response) => {
-    res.json(response);
+    // var name = _.get(response, "text", "Tweets are here");
+    // console.log(name);
+    res.json(response.data);
     updateTwitterFeedData(options);
   });
 });
@@ -110,18 +113,4 @@ app.get("/twitter_test", (req, res) => {
 app.set("port", process.env.PORT || 5000);
 const server = app.listen(app.get("port"), () => {
   console.log(`Express running → PORT ${server.address().port}`);
-  // axios
-  //   .get("https://api.twitter.com/1.1/search/tweets.json", {
-  //     oauth: {
-  //       consumer_key: "zCFloLE29Vd1TMqJxXXaRRriE",
-  //       consumer_secret: "BJKox9gxzSnmx0pDvB5DNx835Xx4vL9ssqI4lk68l2O3eKFAtr",
-  //       token: "345306559-Aq0K7sAOVH5YPbJO3XlSM4zNtqW9ygXrY8nHONu4",
-  //       token_secret: "Ix8Gp5a6awsdzAgmpacARFpf1g8Mo5EMkvjhMsmsaTqCx",
-  //     },
-  //     qs: { screen_name: "q=covid19" },
-  //   })
-  //   .then((response) => {
-  //     console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + response);
-  //   })
-  //   .catch((error) => console.log(error));
 });

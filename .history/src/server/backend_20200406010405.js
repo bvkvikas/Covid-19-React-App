@@ -4,6 +4,7 @@ const cors = require("cors");
 const Pusher = require("pusher");
 const axios = require("axios");
 const OAuth = require("oauth");
+const lodash = require("lodash.get");
 const { promisify } = require("util");
 const constants = require("./constants");
 
@@ -32,7 +33,7 @@ function updateData(options) {
         });
       })
       .catch((error) => console.log(error));
-  }, 5000);
+  }, 120000);
 }
 
 function updateTwitterFeedData(options) {
@@ -45,7 +46,7 @@ function updateTwitterFeedData(options) {
         });
       })
       .catch((error) => console.log(error));
-  }, 12000);
+  }, 5000);
 }
 
 async function fetchTwitterFeed() {
@@ -61,12 +62,12 @@ async function fetchTwitterFeed() {
   const get = promisify(oauth.get.bind(oauth));
 
   const result = await get(
-    "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WHO",
+    "https://api.twitter.com/1.1/search/tweets.json?q=covid19",
     "345306559-FRfmJ2QZSJoQmjbdugiwxb2dGxXxEqprGHjbSifB",
     "bOUrciPIuYOiHh769ln1oU39aLhkQ55Oc7AfgsFNHslTZ"
   );
 
-  return JSON.parse(result);
+  return result;
 }
 
 app.get("/total_cases", (req, res) => {
@@ -110,18 +111,4 @@ app.get("/twitter_test", (req, res) => {
 app.set("port", process.env.PORT || 5000);
 const server = app.listen(app.get("port"), () => {
   console.log(`Express running → PORT ${server.address().port}`);
-  // axios
-  //   .get("https://api.twitter.com/1.1/search/tweets.json", {
-  //     oauth: {
-  //       consumer_key: "zCFloLE29Vd1TMqJxXXaRRriE",
-  //       consumer_secret: "BJKox9gxzSnmx0pDvB5DNx835Xx4vL9ssqI4lk68l2O3eKFAtr",
-  //       token: "345306559-Aq0K7sAOVH5YPbJO3XlSM4zNtqW9ygXrY8nHONu4",
-  //       token_secret: "Ix8Gp5a6awsdzAgmpacARFpf1g8Mo5EMkvjhMsmsaTqCx",
-  //     },
-  //     qs: { screen_name: "q=covid19" },
-  //   })
-  //   .then((response) => {
-  //     console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + response);
-  //   })
-  //   .catch((error) => console.log(error));
 });

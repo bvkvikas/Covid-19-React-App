@@ -18,7 +18,9 @@ const FeedComponent = (data) => (
             <small>just now</small>
           </Toast.Header>
           <Toast.Body>
-            <li>{JSON.stringify(data)}</li>
+            {data.map((feed) => (
+              <li>{JSON.stringify(feed.feed.text)}</li>
+            ))}
           </Toast.Body>
         </Toast>
         <Toast className=" bg-dark text-light">

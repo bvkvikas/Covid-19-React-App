@@ -4,6 +4,7 @@ import { Card } from "react-bootstrap";
 
 const FeedComponent = (data) => (
   // eslint-disable-next-line react/jsx-filename-extension
+  return(
   <div className="container-fluid">
     <Card>
       <Card.Body className=" bg-light text-primary">
@@ -17,9 +18,7 @@ const FeedComponent = (data) => (
             <strong className="mr-auto">WHO </strong>
             <small>just now</small>
           </Toast.Header>
-          <Toast.Body>
-            <li>{JSON.stringify(data)}</li>
-          </Toast.Body>
+          <Toast.Body>{JSON.stringify(data)}</Toast.Body>
         </Toast>
         <Toast className=" bg-dark text-light">
           <Toast.Header>
@@ -36,5 +35,5 @@ const FeedComponent = (data) => (
       </Card.Body>
     </Card>
   </div>
-);
+));
 export default FeedComponent;
