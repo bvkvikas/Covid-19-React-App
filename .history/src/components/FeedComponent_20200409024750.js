@@ -43,7 +43,7 @@ const FeedComponent = (data) => (
               </strong>
               <small>{_.get(row, "user.location", "No data")}</small>
             </Toast.Header>
-            <Toast.Body>{_.get(row, "user.description", "No data")}</Toast.Body>
+            <Toast.Body>{_.get(row, "text", "No data")}</Toast.Body>
           </Toast>
         ))}
       </Card.Body>

@@ -10,9 +10,9 @@ const FeedComponent = (data) => (
       <Row>
         <Col xs={6} md={4}>
           <Image
-            width={55}
-            height={40}
-            alt="50x40"
+            width={65}
+            height={50}
+            alt="171x180"
             src="https://static01.nyt.com/images/2014/08/10/magazine/10wmt/10wmt-jumbo-v4.jpg?quality=90"
             roundedCircle
           />
@@ -41,9 +41,9 @@ const FeedComponent = (data) => (
               <strong className="mr-auto">
                 {_.get(row, "user.screen_name", "No data")}
               </strong>
-              <small>{_.get(row, "user.location", "No data")}</small>
+              <small>{_.get(row, "created_at", "No data")}</small>
             </Toast.Header>
-            <Toast.Body>{_.get(row, "user.description", "No data")}</Toast.Body>
+            <Toast.Body>{_.get(row, "text", "No data")}</Toast.Body>
           </Toast>
         ))}
       </Card.Body>
