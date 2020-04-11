@@ -2,22 +2,28 @@ import React from "react";
 import Toast from "react-bootstrap/Toast";
 import { Card, Row, Col, Container, Image } from "react-bootstrap";
 import _ from "lodash";
-import Avatar from "@material-ui/core/Avatar";
 
 const FeedComponent = (data) => (
   // eslint-disable-next-line react/jsx-filename-extension
   <div className="container-fluid">
-    <Container style={{ background: "#00acee" }}>
-      <Image
-        width={50}
-        height={50}
-        alt="50x50"
-        src="https://montgomeryplanning.org/wp-content/uploads/2016/09/twitter-bird-white-on-blue.png"
-        roundedCircle
-      />
-      <strong className="mr-auto" style={{ color: "#FFFFFF" }}>
-        Twitter Live Feed
-      </strong>
+    <Container style={{ background: "red" }}>
+      <Row>
+        <Col xs={6} md={4}>
+          <Image
+            width={55}
+            height={40}
+            alt="50x40"
+            src="https://static01.nyt.com/images/2014/08/10/magazine/10wmt/10wmt-jumbo-v4.jpg?quality=90"
+            roundedCircle
+          />
+        </Col>
+        <Col xs={6} md={4}>
+          <strong className="mr-auto">#Covid19</strong>
+        </Col>
+        <Col xs={6} md={4}>
+          <strong className="mr-auto">#WHO</strong>
+        </Col>
+      </Row>
     </Container>
     <Card>
       {data.data.map((row) => (
@@ -32,17 +38,10 @@ const FeedComponent = (data) => (
                 className="rounded mr-2"
                 alt=""
               />
-              <Container>
-                <Avatar
-                  alt={_.get(row, "user.profile_image_url", "No data")}
-                  src={_.get(row, "user.profile_image_url", "No data")}
-                />
-              </Container>
-              <Container>
-                <strong>
-                  #{_.get(row, "entities.hashtags[0].text", "WHO")}
-                </strong>
-              </Container>
+              <strong className="mr-auto">
+                {_.get(row, "user.screen_name", "No data")}
+              </strong>
+              <small>{_.get(row, "user.location", "No data")}</small>
             </Toast.Header>
             <Toast.Body>{_.get(row, "text", "No data")}</Toast.Body>
           </Toast>

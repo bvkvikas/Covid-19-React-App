@@ -110,4 +110,18 @@ app.get("/twitter_test", (req, res) => {
 app.set("port", process.env.PORT || 5000);
 const server = app.listen(app.get("port"), () => {
   console.log(`Express running → PORT ${server.address().port}`);
+  // axios
+  //   .get("https://api.twitter.com/1.1/search/tweets.json", {
+  //     oauth: {
+  //       consumer_key: "zCFloLE29Vd1TMqJxXXaRRriE",
+  //       consumer_secret: "BJKox9gxzSnmx0pDvB5DNx835Xx4vL9ssqI4lk68l2O3eKFAtr",
+  //       token: "345306559-Aq0K7sAOVH5YPbJO3XlSM4zNtqW9ygXrY8nHONu4",
+  //       token_secret: "Ix8Gp5a6awsdzAgmpacARFpf1g8Mo5EMkvjhMsmsaTqCx",
+  //     },
+  //     qs: { screen_name: "q=covid19" },
+  //   })
+  //   .then((response) => {
+  //     console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + response);
+  //   })
+  //   .catch((error) => console.log(error));
 });

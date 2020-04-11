@@ -8,16 +8,27 @@ const FeedComponent = (data) => (
   // eslint-disable-next-line react/jsx-filename-extension
   <div className="container-fluid">
     <Container style={{ background: "#00acee" }}>
-      <Image
-        width={50}
-        height={50}
-        alt="50x50"
-        src="https://montgomeryplanning.org/wp-content/uploads/2016/09/twitter-bird-white-on-blue.png"
-        roundedCircle
-      />
+      {/* <Row>
+        <Col xs={6} md={4}> */}
+      <Container>
+        <Image
+          width={50}
+          height={50}
+          alt="50x40"
+          src="https://montgomeryplanning.org/wp-content/uploads/2016/09/twitter-bird-white-on-blue.png"
+          roundedCircle
+        />
+      </Container>
+      {/* </Col> */}
+      {/* <Col xs={6} md={4}>
+          <strong className="mr-auto" style={{ color: "#FFFFFF" }}>
+            #Covid19
+          </strong>
+        </Col> */}
       <strong className="mr-auto" style={{ color: "#FFFFFF" }}>
-        Twitter Live Feed
+        Twitter Live
       </strong>
+      {/* </Row> */}
     </Container>
     <Card>
       {data.data.map((row) => (

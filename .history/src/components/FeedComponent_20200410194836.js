@@ -2,22 +2,32 @@ import React from "react";
 import Toast from "react-bootstrap/Toast";
 import { Card, Row, Col, Container, Image } from "react-bootstrap";
 import _ from "lodash";
-import Avatar from "@material-ui/core/Avatar";
 
 const FeedComponent = (data) => (
   // eslint-disable-next-line react/jsx-filename-extension
   <div className="container-fluid">
     <Container style={{ background: "#00acee" }}>
-      <Image
-        width={50}
-        height={50}
-        alt="50x50"
-        src="https://montgomeryplanning.org/wp-content/uploads/2016/09/twitter-bird-white-on-blue.png"
-        roundedCircle
-      />
-      <strong className="mr-auto" style={{ color: "#FFFFFF" }}>
-        Twitter Live Feed
-      </strong>
+      <Row>
+        <Col xs={6} md={4}>
+          <Image
+            width={60}
+            height={50}
+            alt="50x40"
+            src="https://store-images.s-microsoft.com/image/apps.50484.9007199266244427.4d45042b-d7a5-4a83-be66-97779553b24d.2c71c1ea-c28f-4dd1-b72d-c43cdd3476f4"
+            roundedCircle
+          />
+        </Col>
+        <Col xs={6} md={4}>
+          <strong className="mr-auto" style={{ color: "#FFFFFF" }}>
+            #Covid19
+          </strong>
+        </Col>
+        <Col xs={6} md={4}>
+          <strong className="mr-auto" style={{ color: "#FFFFFF" }}>
+            #WHO
+          </strong>
+        </Col>
+      </Row>
     </Container>
     <Card>
       {data.data.map((row) => (
@@ -32,17 +42,10 @@ const FeedComponent = (data) => (
                 className="rounded mr-2"
                 alt=""
               />
-              <Container>
-                <Avatar
-                  alt={_.get(row, "user.profile_image_url", "No data")}
-                  src={_.get(row, "user.profile_image_url", "No data")}
-                />
-              </Container>
-              <Container>
-                <strong>
-                  #{_.get(row, "entities.hashtags[0].text", "WHO")}
-                </strong>
-              </Container>
+              <strong className="mr-auto">
+                {_.get(row, "user.screen_name", "No data")}
+              </strong>
+              <small>{_.get(row, "user.location", "No data")}</small>
             </Toast.Header>
             <Toast.Body>{_.get(row, "text", "No data")}</Toast.Body>
           </Toast>
