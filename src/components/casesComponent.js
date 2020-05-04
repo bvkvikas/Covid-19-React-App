@@ -6,15 +6,13 @@ class CasesComponent extends PureComponent {
   render() {
     const { color, header, data } = this.props;
     return (
-      <>
-        <Card bg={color} key={1} text='white'>
-          <Card.Header>{header}</Card.Header>
-          <Card.Body>
-            <Card.Title>{data} </Card.Title>
-            <Card.Text />
-          </Card.Body>
-        </Card>
-      </>
+      <Card bg={color} key={1} text='white'>
+        <Card.Header>{header}</Card.Header>
+        <Card.Body>
+          <Card.Title>{data} </Card.Title>
+          <Card.Text />
+        </Card.Body>
+      </Card>
     );
   }
 }

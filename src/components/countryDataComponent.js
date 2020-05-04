@@ -4,10 +4,10 @@ import CasesComponent from './casesComponent';
 
 class CountryDataComponent extends PureComponent {
   render() {
-    const { country, todayCases, active, cases, deaths } = this.props.data;
-    console.log(this.props);
+    const { data } = this.props;
+    const { country, todayCases, active, cases, deaths } = data;
     return (
-      <>
+      <div>
         <Card bg='dark' key={1} text='white'>
           <Card.Header>{country}</Card.Header>
           <Card.Body>
@@ -49,21 +49,11 @@ class CountryDataComponent extends PureComponent {
                     color='danger'
                   />
                 </div>
-
-                {/* <div class='col-md-3'>
-                  <ActiveComponent data={this.props.data[0].active} />
-                </div>
-                <div class='col-md-3'>
-                  <TotalCasesComponent data={this.props.data[0].cases} />
-                </div>
-                <div class='col-md-3'>
-                  <DeathCasesComponent data={this.props.data[0].deaths} />
-                </div> */}
               </div>
             </Card.Text>
           </Card.Body>
         </Card>
-      </>
+      </div>
     );
   }
 }

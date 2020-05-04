@@ -3,9 +3,5 @@ import MainDashboardComponent from './components/MainDashboardComponent';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = () => (
-  <div>
-    <MainDashboardComponent />
-  </div>
-);
+const App = () => <MainDashboardComponent />;
 export default App;

@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
-import Pusher from 'pusher-js';
-import dotenv from 'dotenv';
 import _ from 'lodash';
 import * as actions from '../store/actions';
 import CountryListComponent from './CountryListComponent';
@@ -18,7 +16,7 @@ class MainDashboardComponent extends PureComponent {
   render() {
     const { cases, totalCases } = this.props;
     return (
-      <div>
+      <>
         <Navbar bg='dark' variant='dark'>
           <Navbar.Brand href='#home'>
             <LogoComponent />
@@ -33,7 +31,7 @@ class MainDashboardComponent extends PureComponent {
             <CircularProgress />
           )}
         </div>
-      </div>
+      </>
     );
   }
 }
