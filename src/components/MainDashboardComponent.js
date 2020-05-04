@@ -1,72 +1,22 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
 import Pusher from 'pusher-js';
 import dotenv from 'dotenv';
 import _ from 'lodash';
+import * as actions from '../store/actions';
 import CountryListComponent from './CountryListComponent';
-import DataDisplayComponent from './DataDisplayComponent';
 import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
-import { EVENTS, CHANNELS, BACKEND_URL } from '../server/constants';
 import CountryDataComponent from './countryDataComponent';
 
-class MainDashboardComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      totalCases: {},
-      cases: []
-    };
-  }
-
-  componentDidMount() {
-    const pusher = createPusher();
-
-    // ALL CASES DATA FETCH
-
-    this.fetchData(
-      BACKEND_URL.TOTAL_CASES,
-      'totalCases',
-      CHANNELS.TOTAL_CASES,
-      EVENTS.UPDATE_TOTAL_CASES,
-      pusher
-    );
-
-    // Countrywise CASES DATA FETCH
-    this.fetchData(
-      BACKEND_URL.COUNTRYWISE_CASES,
-      'cases',
-      CHANNELS.COUNTRYWISE_CASES,
-      EVENTS.UPDATE_COUNTRYWISE_CASES,
-      pusher
-    );
-  }
-
-  fetchData = (url, propToUpdate, channelName, eventName, pusher) => {
-    // CASES BY COUNTRY DATA FETCH
-    fetch(url)
-      .then(response => response.json())
-      .then(countryCount => {
-        this.setState({
-          [propToUpdate]: countryCount
-        });
-
-        const channel = createChannel(channelName, pusher);
-
-        channel.bind(eventName, response => {
-          this.setState({
-            [propToUpdate]: response
-          });
-        });
-      })
-      .catch(error => console.log(error));
-  };
-
+class MainDashboardComponent extends PureComponent {
   render() {
-    const { cases, totalCases } = this.state;
+    const { cases, totalCases } = this.props;
     return (
       <div>
         <Navbar bg='dark' variant='dark'>
@@ -96,21 +46,7 @@ MainDashboardComponent.defaultProps = {
   cases: 0
 };
 
-// / CHANGE THE APP KEY TO YOURS BEFORE RUNNING
-function createPusher() {
-  return new Pusher('YOUR PUSHER APP KEY - PUSHER_APP_KEY', {
-    cluster: 'us2',
-    encrypted: true
-  });
-}
-
-function createChannel(channelName, pusher) {
-  return pusher.subscribe(channelName);
-}
-
 function displayDashboard(cases, totalCases) {
-  // console.log(cases[0]);
-  console.log(cases);
   return (
     <Paper elevation={3}>
       <br />
@@ -119,7 +55,7 @@ function displayDashboard(cases, totalCases) {
           <CountryListComponent data={cases} />
         </div>
         <div className='col-md-7'>
-          <CountryDataComponent data={cases} />
+          <CountryDataComponent data={totalCases} />
         </div>
 
         <div className='col-md-3'>
@@ -130,4 +66,30 @@ function displayDashboard(cases, totalCases) {
   );
 }
 
-export default MainDashboardComponent;
+MainDashboardComponent.propTypes = {
+  cases: PropTypes.instanceOf(Array),
+  totalCases: PropTypes.instanceOf(Object)
+};
+
+MainDashboardComponent.defaultProps = {
+  cases: [],
+  totalCases: {}
+};
+
+function mapStateToProps(state, ownProps) {
+  return {
+    totalCases: state.feedReducers.totalCases,
+    cases: state.feedReducers.cases
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainDashboardComponent);

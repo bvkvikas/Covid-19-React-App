@@ -1,4 +1,8 @@
 import { combineReducers } from 'redux';
 import feedReducers from './feedReducer';
 
-export default combineReducers({ feedReducers });
+const rootReducer = combineReducers({
+  feedReducers
+});
+
+export default rootReducer;

@@ -5,11 +5,12 @@ import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store/configureStore';
-import { getTotalCases } from './store/actions';
+import { getTotalCases, getCountrywiseCases } from './store/actions';
 
 const store = configureStore();
 
 store.dispatch(getTotalCases());
+store.dispatch(getCountrywiseCases());
 
 ReactDOM.render(
   // eslint-disable-next-line react/jsx-filename-extension
