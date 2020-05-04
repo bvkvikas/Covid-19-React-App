@@ -18,7 +18,7 @@ class MainDashboardComponent extends Component {
     super(props);
     this.state = {
       totalCases: {},
-      cases: [],
+      cases: []
     };
   }
 
@@ -48,21 +48,21 @@ class MainDashboardComponent extends Component {
   fetchData = (url, propToUpdate, channelName, eventName, pusher) => {
     // CASES BY COUNTRY DATA FETCH
     fetch(url)
-      .then((response) => response.json())
-      .then((countryCount) => {
+      .then(response => response.json())
+      .then(countryCount => {
         this.setState({
-          [propToUpdate]: countryCount,
+          [propToUpdate]: countryCount
         });
 
         const channel = createChannel(channelName, pusher);
 
-        channel.bind(eventName, (response) => {
+        channel.bind(eventName, response => {
           this.setState({
-            [propToUpdate]: response,
+            [propToUpdate]: response
           });
         });
       })
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
   };
 
   render() {
@@ -93,14 +93,14 @@ MainDashboardComponent.propTypes = {
 };
 
 MainDashboardComponent.defaultProps = {
-  cases: 0,
+  cases: 0
 };
 
-/// CHANGE THE APP KEY TO YOURS BEFORE RUNNING
+// / CHANGE THE APP KEY TO YOURS BEFORE RUNNING
 function createPusher() {
   return new Pusher('YOUR PUSHER APP KEY - PUSHER_APP_KEY', {
     cluster: 'us2',
-    encrypted: true,
+    encrypted: true
   });
 }
 
@@ -109,7 +109,7 @@ function createChannel(channelName, pusher) {
 }
 
 function displayDashboard(cases, totalCases) {
-  //console.log(cases[0]);
+  // console.log(cases[0]);
   console.log(cases);
   return (
     <Paper elevation={3}>
