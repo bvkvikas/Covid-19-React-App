@@ -1,11 +1,11 @@
-require("dotenv").config({ path: "../../variables.env" });
-const express = require("express");
-const cors = require("cors");
-const Pusher = require("pusher");
-const axios = require("axios");
-const OAuth = require("oauth");
-const { promisify } = require("util");
-const constants = require("./constants");
+require('dotenv').config({path: '../../variables.env'});
+const express = require('express');
+const cors = require('cors');
+const Pusher = require('pusher');
+const axios = require('axios');
+const OAuth = require('oauth');
+const {promisify} = require('util');
+const constants = require('./constants');
 
 const app = express();
 
@@ -14,7 +14,7 @@ const pusher = new Pusher({
   key: process.env.PUSHER_APP_KEY,
   secret: process.env.PUSHER_APP_SECRET,
   cluster: process.env.PUSHER_APP_CLUSTER,
-  encrypted: true,
+  encrypted: true
 });
 
 const fetchData = (url) => {
@@ -28,7 +28,7 @@ function updateData(options) {
     fetchData(options.url)
       .then((response) => {
         pusher.trigger(options.channel, options.event, {
-          cases: response.data,
+          cases: response.data
         });
       })
       .catch((error) => console.log(error));
@@ -41,7 +41,7 @@ function updateTwitterFeedData(options) {
       .then((response) => {
         console.log(response);
         pusher.trigger(options.channel, options.event, {
-          feed: response,
+          feed: response
         });
       })
       .catch((error) => console.log(error));
@@ -49,31 +49,36 @@ function updateTwitterFeedData(options) {
 }
 
 async function fetchTwitterFeed() {
+  const req_token_url = constants.URL.TWITTER_REQ_TOKEN_URL;
+  const acc_token_url = constants.URL.TWITTER_ACCESS_TOKEN_URL;
+  const acc_key = constants.URL.TWITTER_ACC_KEY;
+  const sec_key = constants.URL.TWITTER_SEC_KEY;
+  const oauth_k = constants.URL.OAUTH;
+  const oauth_url = constants.URL.OAUTH_URL;
+  const oauth_sha = constants.URL.SHA_CONFIG;
+  const tweeter_api = constants.URL.TWITTER_API_WHO;
+  const api_key = constants.URL.API_KEY;
+  const api_s_key = constants.URL.API_S_KEY;
+
   const oauth = new OAuth.OAuth(
-    "https://twitter.com/oauth/request_token",
-    "https://twitter.com/oauth/access_token",
-    "zCFloLE29Vd1TMqJxXXaRRriE",
-    "BJKox9gxzSnmx0pDvB5DNx835Xx4vL9ssqI4lk68l2O3eKFAtr",
-    "1.0A",
-    "http://localhost:3000/oauth/callback",
-    "HMAC-SHA1"
+    req_token_url,
+    acc_token_url,
+    acc_key,
+    sec_key,
+    oauth_k,
+    oauth_url,
+    oauth_sha
   );
   const get = promisify(oauth.get.bind(oauth));
-
-  const result = await get(
-    "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WHO",
-    "345306559-Y1ULoSZxuYffIalfOcePIBx5SgyOAJhBFang80tm",
-    "gde5l43aLcWsOYNkm6kNHQtEM3S0Ex7Jtr3Gl5Nnpk8uD"
-  );
-
+  const result = await get(tweeter_api, api_key, api_s_key);
   return JSON.parse(result);
 }
 
-app.get("/total_cases", (req, res) => {
+app.get('/total_cases', (req, res) => {
   const url = constants.URL.TOTAL_CASES;
   const channel = constants.CHANNELS.TOTAL_CASES;
   const event = constants.EVENTS.UPDATE_TOTAL_CASES;
-  const options = { url, channel, event };
+  const options = {url, channel, event};
   fetchData(url)
     .then((response) => {
       console.log(response.data.cases);
@@ -83,11 +88,11 @@ app.get("/total_cases", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-app.get("/all_countries", (req, res) => {
+app.get('/all_countries', (req, res) => {
   const url = constants.URL.COUNTRYWISE_CASES;
   const channel = constants.CHANNELS.COUNTRYWISE_CASES;
   const event = constants.EVENTS.UPDATE_COUNTRYWISE_CASES;
-  const options = { url, channel, event };
+  const options = {url, channel, event};
   fetchData(url)
     .then((response) => {
       res.json(response.data);
@@ -96,18 +101,18 @@ app.get("/all_countries", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-app.get("/twitter_test", (req, res) => {
+app.get('/twitter_test', (req, res) => {
   const url = constants.URL.TWITTER_COVID19;
   const channel = constants.CHANNELS.TWITTER_COVID19;
   const event = constants.EVENTS.UPDATE_TWITTER_COVID19;
-  const options = { url, channel, event };
+  const options = {url, channel, event};
   fetchTwitterFeed().then((response) => {
     res.json(response);
     updateTwitterFeedData(options);
   });
 });
 
-app.set("port", process.env.PORT || 5000);
-const server = app.listen(app.get("port"), () => {
+app.set('port', process.env.PORT || 5000);
+const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);
 });
