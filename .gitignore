@@ -105,3 +105,6 @@ dist
 
 #history for git
 .history/
+
+#variables.env
+*.env*

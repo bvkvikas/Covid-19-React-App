@@ -51,14 +51,14 @@ function updateTwitterFeedData(options) {
 async function fetchTwitterFeed() {
   const req_token_url = constants.URL.TWITTER_REQ_TOKEN_URL;
   const acc_token_url = constants.URL.TWITTER_ACCESS_TOKEN_URL;
-  const acc_key = constants.URL.TWITTER_ACC_KEY;
-  const sec_key = constants.URL.TWITTER_SEC_KEY;
-  const oauth_k = constants.URL.OAUTH;
+  const acc_key = process.env.TWITTER_ACC_KEY;
+  const sec_key = process.env.TWITTER_SEC_KEY;
+  const oauth_k = process.env.OAUTH;
   const oauth_url = constants.URL.OAUTH_URL;
-  const oauth_sha = constants.URL.SHA_CONFIG;
+  const oauth_sha = process.env.SHA_CONFIG;
   const tweeter_api = constants.URL.TWITTER_API_WHO;
-  const api_key = constants.URL.API_KEY;
-  const api_s_key = constants.URL.API_S_KEY;
+  const api_key = process.env.API_KEY;
+  const api_s_key = process.env.API_S_KEY;
 
   const oauth = new OAuth.OAuth(
     req_token_url,
