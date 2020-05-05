@@ -14,13 +14,7 @@ const URL = {
   TWITTER_ACCESS_TOKEN_URL: 'https://twitter.com/oauth/access_token',
   OAUTH_URL: 'http://localhost:3000/oauth/callback',
   TWITTER_API_WHO:
-    'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WHO',
-  TWITTER_ACC_KEY: 'zCFloLE29Vd1TMqJxXXaRRriE',
-  TWITTER_SEC_KEY: 'BJKox9gxzSnmx0pDvB5DNx835Xx4vL9ssqI4lk68l2O3eKFAtr',
-  OAUTH: '1.0A',
-  SHA_CONFIG: 'HMAC-SHA1',
-  API_KEY: '345306559-Y1ULoSZxuYffIalfOcePIBx5SgyOAJhBFang80tm',
-  API_S_KEY: 'gde5l43aLcWsOYNkm6kNHQtEM3S0Ex7Jtr3Gl5Nnpk8uD'
+    'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WHO'
 };
 
 const CHANNELS = {

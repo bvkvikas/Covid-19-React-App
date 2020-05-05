@@ -11,7 +11,6 @@ import DataDisplayComponent from './DataDisplayComponent';
 import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
 import {EVENTS, CHANNELS, BACKEND_URL} from '../server/constants';
-import CountryDataComponent from './countryDataComponent';
 
 class MainDashboardComponent extends Component {
   constructor(props) {
