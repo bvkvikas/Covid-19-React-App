@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const Pusher = require('pusher');
 const axios = require('axios');
+const _ = require('lodash');
 const constants = require('./constants');
 
 const app = express();
@@ -15,9 +16,15 @@ const pusher = new Pusher({
   encrypted: true
 });
 
-const fetchData = url => {
-  return axios.get(url);
-};
+async function fetchData() {
+  const response = await axios.get(
+    'https://corona.lmao.ninja/v2/countries?sort=cases'
+  );
+
+  response.data.map(row => console.log(row.country));
+
+  return response;
+}
 
 app.use(cors());
 
@@ -59,6 +66,15 @@ app.get('/all_countries', (req, res) => {
     })
     .catch(error => console.log(error));
 });
+
+app.get('/test', (req, res) => {
+  fetchData()
+    .then(response => {
+      res.json(response.data);
+    })
+    .catch(error => console.log(error));
+});
+
 app.set('port', process.env.PORT || 5000);
 const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);

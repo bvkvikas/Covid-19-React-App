@@ -2,7 +2,8 @@
 import axios from 'axios';
 import {
   GET_TOTAL_CASES_SUCCESS,
-  GET_COUNTRYWISE_CASES_SUCCESS
+  GET_COUNTRYWISE_CASES_SUCCESS,
+  GET_COUNTRY_CASES_SUCCESS
 } from './actionTypes';
 
 function loadTotalCasesSuccess(response) {
@@ -11,6 +12,10 @@ function loadTotalCasesSuccess(response) {
 
 function loadCountrywiseCasesSuccess(response) {
   return { type: GET_COUNTRYWISE_CASES_SUCCESS, response };
+}
+
+function loadSpecificCountryCasesSuccess(response) {
+  return { type: GET_COUNTRY_CASES_SUCCESS, response };
 }
 
 export const getTotalCases = () => {
@@ -28,3 +33,12 @@ export function getCountrywiseCases() {
     dispatch(loadCountrywiseCasesSuccess(response));
   };
 }
+
+export const getSpecificCountryCases = country => {
+  return async dispatch => {
+    const response = await axios.get(
+      `https://corona.lmao.ninja/v2/countries/:${country}?yesterday=true&strict=true`
+    );
+    dispatch(loadSpecificCountryCasesSuccess(response));
+  };
+};

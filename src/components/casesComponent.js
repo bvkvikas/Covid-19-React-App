@@ -1,20 +1,36 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { PureComponent } from 'react';
-import Card from 'react-bootstrap/Card';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-class CasesComponent extends PureComponent {
-  render() {
-    const { color, header, data } = this.props;
-    return (
-      <Card bg={color} key={1} text='white'>
-        <Card.Header>{header}</Card.Header>
-        <Card.Body>
-          <Card.Title>{data} </Card.Title>
-          <Card.Text />
-        </Card.Body>
-      </Card>
-    );
+const useStyles = makeStyles({
+  root: {
+    minWidth: 150,
+    backgroundColor: props => props.color
+  },
+  title: {
+    fontSize: 12
   }
-}
+});
+
+const CasesComponent = props => {
+  const { color, header, data } = props;
+  const styles = useStyles();
+  return (
+    <Card style={{ backgroundColor: color }} variant='outlined'>
+      <CardContent>
+        {header}
+        {data}
+      </CardContent>
+      <CardActions>
+        <Button size='small'>Learn More</Button>
+      </CardActions>
+    </Card>
+  );
+};
 
 export default CasesComponent;

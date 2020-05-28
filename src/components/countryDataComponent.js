@@ -18,7 +18,7 @@ class CountryDataComponent extends PureComponent {
                   <CasesComponent
                     data={todayCases}
                     header=" Today's Cases"
-                    color='primary'
+                    color='blue'
                   />
                 </div>
 
@@ -27,7 +27,7 @@ class CountryDataComponent extends PureComponent {
                   <CasesComponent
                     data={active}
                     header=' Active Cases'
-                    color='warning'
+                    color='red'
                   />
                 </div>
 
@@ -37,17 +37,13 @@ class CountryDataComponent extends PureComponent {
                   <CasesComponent
                     data={cases}
                     header=' Total Cases'
-                    color='secondary'
+                    color='yellow'
                   />
                 </div>
 
                 {/* Death */}
                 <div className='col-md-3'>
-                  <CasesComponent
-                    data={deaths}
-                    header=' Death'
-                    color='danger'
-                  />
+                  <CasesComponent data={deaths} header=' Death' color='green' />
                 </div>
               </div>
             </Card.Text>

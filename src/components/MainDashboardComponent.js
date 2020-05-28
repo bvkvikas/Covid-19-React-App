@@ -25,7 +25,7 @@ class MainDashboardComponent extends PureComponent {
         </Navbar>
         <div className='container-fluid'>
           <br />
-          {cases[0] != null ? (
+          {cases.length > 0 ? (
             displayDashboard(cases, totalCases)
           ) : (
             <CircularProgress />
@@ -74,7 +74,7 @@ MainDashboardComponent.defaultProps = {
   totalCases: {}
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     totalCases: state.feedReducers.totalCases,
     cases: state.feedReducers.cases

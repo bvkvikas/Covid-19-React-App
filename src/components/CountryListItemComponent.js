@@ -5,10 +5,18 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../store/actions';
 
 class CountryListItemComponent extends PureComponent {
+  componentDidMount() {}
+
   render() {
-    const { onSelectCountry, countryInfo } = this.props;
+    const onSelectCountry = countryInfo => {
+      console.log(countryInfo);
+    };
+    const { countryInfo } = this.props;
     return (
       <>
         <ListItem
@@ -38,4 +46,20 @@ class CountryListItemComponent extends PureComponent {
   }
 }
 
-export default CountryListItemComponent;
+function mapStateToProps(state) {
+  return {
+    totalCases: state.feedReducers.totalCases,
+    cases: state.feedReducers.cases
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CountryListItemComponent);
