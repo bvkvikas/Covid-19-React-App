@@ -13,28 +13,25 @@ class CountryListItemComponent extends PureComponent {
   componentDidMount() {}
 
   render() {
-    const onSelectCountry = countryInfo => {
-      console.log(countryInfo);
-    };
-    const { countryInfo } = this.props;
+    const onSelectCountry = countryInfo => {};
+    const {
+      countryInfo: { countryName, cases, flag }
+    } = this.props;
     return (
       <>
         <ListItem
           button
           alignItems='flex-start'
-          onClick={() => onSelectCountry(countryInfo)}
+          onClick={() => onSelectCountry(countryName)}
         >
           <ListItemAvatar>
-            <Avatar
-              alt={countryInfo.country}
-              src={countryInfo.countryInfo.flag}
-            />
+            <Avatar alt={countryName} src={flag} />
           </ListItemAvatar>
           <ListItemText
-            primary={<Typography>{countryInfo.country}</Typography>}
+            primary={<Typography>{countryName}</Typography>}
             secondary={
               <Typography variant='body2'>
-                {`Total Cases:  ${countryInfo.cases}`}
+                {`Total Cases:  ${cases}`}
               </Typography>
             }
           />
@@ -48,7 +45,6 @@ class CountryListItemComponent extends PureComponent {
 
 function mapStateToProps(state) {
   return {
-    totalCases: state.feedReducers.totalCases,
     cases: state.feedReducers.cases
   };
 }

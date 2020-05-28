@@ -4,26 +4,27 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
-import _ from 'lodash';
 import * as actions from '../store/actions';
+
 import CountryListComponent from './CountryListComponent';
 import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
-import CountryDataComponent from './countryDataComponent';
+import Cards from './Cards/Cards';
+
+import styles from './App.module.css';
 
 class MainDashboardComponent extends PureComponent {
   render() {
     const { cases, totalCases } = this.props;
     return (
       <>
-        <Navbar bg='dark' variant='dark'>
-          <Navbar.Brand href='#home'>
-            <LogoComponent />
-            COVID-19
-          </Navbar.Brand>
-        </Navbar>
         <div className='container-fluid'>
+          <Navbar bg='dark' variant='dark'>
+            <Navbar.Brand href='#home'>
+              <LogoComponent />
+              COVID-19
+            </Navbar.Brand>
+          </Navbar>
           <br />
           {cases.length > 0 ? (
             displayDashboard(cases, totalCases)
@@ -46,21 +47,12 @@ MainDashboardComponent.defaultProps = {
 
 function displayDashboard(cases, totalCases) {
   return (
-    <Paper elevation={3}>
-      <br />
-      <div className='row'>
-        <div className='col-md-2'>
-          <CountryListComponent data={cases} />
-        </div>
-        <div className='col-md-7'>
-          <CountryDataComponent data={totalCases} />
-        </div>
+    <div className={styles.container}>
+      <Cards data={totalCases} />
+      {/* <CountryListComponent data={cases} /> */}
 
-        <div className='col-md-3'>
-          <FeedComponent />
-        </div>
-      </div>
-    </Paper>
+      {/* <FeedComponent /> */}
+    </div>
   );
 }
 

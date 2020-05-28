@@ -20,8 +20,12 @@ async function fetchData() {
   const response = await axios.get(
     'https://corona.lmao.ninja/v2/countries?sort=cases'
   );
-
-  response.data.map(row => console.log(row.country));
+  // const {
+  //   data: { country, cases, todayCases, deaths, recovered, active }
+  // } = response;
+  // console.log(response);
+  // console.log(`${country} : ${cases}`);
+  // response.data.map(row => console.log(row.country));
 
   return response;
 }
@@ -70,7 +74,12 @@ app.get('/all_countries', (req, res) => {
 app.get('/test', (req, res) => {
   fetchData()
     .then(response => {
-      res.json(response.data);
+      res.json(
+        response.data.map(({ country, cases }) => ({
+          countryName: country,
+          cases
+        }))
+      );
     })
     .catch(error => console.log(error));
 });

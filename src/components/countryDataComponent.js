@@ -1,54 +1,16 @@
-import React, { PureComponent } from 'react';
-import Card from 'react-bootstrap/Card';
-import CasesComponent from './casesComponent';
+import React, { Component } from 'react';
+import Cards from './Cards/Cards';
 
-class CountryDataComponent extends PureComponent {
+// import { styles } from '../Cards.modules.css';
+
+// eslint-disable-next-line react/prefer-stateless-function
+class CountryDataComponent extends Component {
   render() {
     const { data } = this.props;
-    const { country, todayCases, active, cases, deaths } = data;
+    const { todayCases, active, deaths } = data;
     return (
       <div>
-        <Card bg='dark' key={1} text='white'>
-          <Card.Header>{country}</Card.Header>
-          <Card.Body>
-            <Card.Title>Cases </Card.Title>
-            <Card.Text>
-              <div className='row'>
-                <div className='col-md-3'>
-                  <CasesComponent
-                    data={todayCases}
-                    header=" Today's Cases"
-                    color='blue'
-                  />
-                </div>
-
-                {/* Active  */}
-                <div className='col-md-3'>
-                  <CasesComponent
-                    data={active}
-                    header=' Active Cases'
-                    color='red'
-                  />
-                </div>
-
-                {/* Total Cases */}
-
-                <div className='col-md-3'>
-                  <CasesComponent
-                    data={cases}
-                    header=' Total Cases'
-                    color='yellow'
-                  />
-                </div>
-
-                {/* Death */}
-                <div className='col-md-3'>
-                  <CasesComponent data={deaths} header=' Death' color='green' />
-                </div>
-              </div>
-            </Card.Text>
-          </Card.Body>
-        </Card>
+        <Cards data={data} />
       </div>
     );
   }
