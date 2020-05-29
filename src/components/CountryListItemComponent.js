@@ -1,41 +1,78 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { ListItem, ListItemText } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../store/actions';
 
-class CountryListItemComponent extends Component {
-  state = {};
+class CountryListItemComponent extends PureComponent {
+  componentDidMount() {}
+
   render() {
+    const onSelectCountry = countryInfo => {
+      console.log(`Selected ${countryInfo}`);
+    };
+    const {
+      countryInfo: { countryName, cases, flag }
+    } = this.props;
     return (
-      <React.Fragment>
-        <ListItem
-          button
-          alignItems='flex-start'
-          onClick={() => this.props.onSelectCountry(this.props.country_info)}
-        >
-          <ListItemAvatar>
-            <Avatar
-              alt={this.props.country_info.country}
-              src={this.props.country_info.countryInfo.flag}
-            />
-          </ListItemAvatar>
-          <ListItemText
-            primary={<Typography>{this.props.country_info.country}</Typography>}
-            secondary={
-              <Typography variant='body2'>
-                {'Total Cases:  ' + this.props.country_info.cases}
+      <ListItem alignItems='flex-start'>
+        <ListItemAvatar>
+          <Avatar alt='Remy Sharp' src={flag} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <>
+              <Typography component='span' variant='body2' color='white'>
+                {countryName}
               </Typography>
-            }
-          />
-        </ListItem>
-        {/* <Divider variant='middle' component='li' className={classes.root} /> */}
-        <Divider variant='middle' component='li' />
-      </React.Fragment>
+            </>
+          }
+          secondary={cases}
+        />
+      </ListItem>
+      // <>
+      //   <ListItem
+      //     button
+      //     alignItems='flex-start'
+      //     onClick={() => onSelectCountry(countryName)}
+      //   >
+      //     <ListItemAvatar>
+      //       <Avatar alt={countryName} src={flag} />
+      //     </ListItemAvatar>
+      //     <ListItemText
+      //       primary={<Typography>{countryName}</Typography>}
+      //       secondary={
+      //         <Typography variant='body2'>
+      //           {`Total Cases:  ${cases}`}
+      //         </Typography>
+      //       }
+      //     />
+      //   </ListItem>
+      //   {/* <Divider variant='middle' component='li' className={classes.root} /> */}
+      //   <Divider variant='middle' component='li' />
+      // </>
     );
   }
 }
 
-export default CountryListItemComponent;
+function mapStateToProps(state) {
+  return {
+    cases: state.feedReducers.cases
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CountryListItemComponent);

@@ -1,30 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 import CountryListItemComponent from './CountryListItemComponent';
 
-class CountryListComponent extends Component {
-  state = {};
-
-  handleSelectedCountry = (country) => {
-    console.log('TESTING MY THING', country);
-  };
-
-  render() {
-    return (
-      <React.Fragment>
-        <List className='bg-dark text-light rounded' height={400} width={300}>
-          {this.props.data.map((row) => (
-            <CountryListItemComponent
-              key={row.country}
-              country_info={row}
-              onSelectCountry={this.handleSelectedCountry}
-              // onSelectCountry={this.props.onSelectCountry}
-            />
-          ))}
-        </List>
-      </React.Fragment>
-    );
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    maxWidth: '36ch',
+    backgroundColor: 'grey',
+    maxHeight: '100px',
+    overflow: 'auto',
+    color: 'white'
+  },
+  inline: {
+    display: 'inline'
   }
-}
+}));
 
+const CountryListComponent = data => {
+  const classes = useStyles();
+
+  return (
+    <List
+      style={{
+        width: '100%',
+        maxWidth: '36ch',
+        backgroundColor: 'grey',
+        color: 'white',
+        maxHeight: 200,
+        overflow: 'auto'
+      }}
+    >
+      {data.data.map(row => (
+        <CountryListItemComponent key={row.countryName} countryInfo={row} />
+      ))}
+      <Divider variant='inset' component='li' />
+    </List>
+  );
+};
 export default CountryListComponent;

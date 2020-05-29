@@ -1,81 +1,22 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
-import Pusher from 'pusher-js';
-import dotenv from 'dotenv';
-import _ from 'lodash';
+import * as actions from '../store/actions';
+
 import CountryListComponent from './CountryListComponent';
-import DataDisplayComponent from './DataDisplayComponent';
 import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
-import {EVENTS, CHANNELS, BACKEND_URL} from '../server/constants';
+import Cards from './Cards/Cards';
+import Chart from './Charts/Chart';
 
-class MainDashboardComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      totalCases: {},
-      cases: [],
-      twitterFeed: {}
-    };
-  }
+import styles from './App.module.css';
 
-  componentDidMount() {
-    const pusher = createPusher();
-
-    // ALL CASES DATA FETCH
-
-    this.fetchData(
-      BACKEND_URL.TOTAL_CASES,
-      'totalCases',
-      CHANNELS.TOTAL_CASES,
-      EVENTS.UPDATE_TOTAL_CASES,
-      pusher
-    );
-
-    // Countrywise CASES DATA FETCH
-    this.fetchData(
-      BACKEND_URL.COUNTRYWISE_CASES,
-      'cases',
-      CHANNELS.COUNTRYWISE_CASES,
-      EVENTS.UPDATE_COUNTRYWISE_CASES,
-      pusher
-    );
-
-    //Twitter Feed
-    this.fetchData(
-      BACKEND_URL.TWITTER_FEED,
-      'twitterFeed',
-      CHANNELS.TWITTER_FEED,
-      EVENTS.UPDATE_TWITTER_FEED,
-      pusher
-    );
-  }
-
-  fetchData = (url, propToUpdate, channelName, eventName, pusher) => {
-    // CASES BY COUNTRY DATA FETCH
-    fetch(url)
-      .then((response) => response.json())
-      .then((countryCount) => {
-        this.setState({
-          [propToUpdate]: countryCount
-        });
-
-        const channel = createChannel(channelName, pusher);
-
-        channel.bind(eventName, (response) => {
-          this.setState({
-            [propToUpdate]: response
-          });
-        });
-      })
-      .catch((error) => console.log(error));
-  };
-
+class MainDashboardComponent extends PureComponent {
   render() {
-    const {cases, totalCases, twitterFeed} = this.state;
+    const { cases, totalCases } = this.props;
     return (
       <div>
         <Navbar bg='dark' variant='dark'>
@@ -84,14 +25,12 @@ class MainDashboardComponent extends Component {
             COVID-19
           </Navbar.Brand>
         </Navbar>
-        <div className='container-fluid'>
-          <br />
-          {cases != null && twitterFeed[0] != undefined ? (
-            displayDashboard(cases, totalCases, twitterFeed)
-          ) : (
-            <CircularProgress />
-          )}
-        </div>
+        <br />
+        {cases.length > 0 ? (
+          displayDashboard(cases, totalCases)
+        ) : (
+          <CircularProgress />
+        )}
       </div>
     );
   }
@@ -105,36 +44,42 @@ MainDashboardComponent.defaultProps = {
   cases: 0
 };
 
-/// CHANGE THE APP KEY TO YOURS BEFORE RUNNING
-function createPusher() {
-  return new Pusher('YOUR PUSHER APP KEY - PUSHER_APP_KEY', {
-    cluster: 'us2',
-    encrypted: true
-  });
-}
-
-function createChannel(channelName, pusher) {
-  return pusher.subscribe(channelName);
-}
-
-function displayDashboard(cases, totalCases, twitterFeed) {
+function displayDashboard(cases, totalCases, timeline) {
   return (
-    <Paper elevation={3}>
-      <br />
-      <div className='row'>
-        <div className='col-md-2'>
-          <CountryListComponent data={cases} />
-        </div>
-        <div className='col-md-7'>
-          <DataDisplayComponent data={totalCases} />
-        </div>
-
-        <div className='col-md-3'>
-          <FeedComponent data={twitterFeed} />
-        </div>
-      </div>
-    </Paper>
+    <div className={styles.container}>
+      {/* <CountryListComponent data={cases} /> */}
+      <Cards data={totalCases} />
+      <Chart data={timeline} />
+      {/* <FeedComponent /> */}
+    </div>
   );
 }
 
-export default MainDashboardComponent;
+MainDashboardComponent.propTypes = {
+  cases: PropTypes.instanceOf(Array),
+  totalCases: PropTypes.instanceOf(Object)
+};
+
+MainDashboardComponent.defaultProps = {
+  cases: [],
+  totalCases: {}
+};
+
+function mapStateToProps(state) {
+  return {
+    totalCases: state.feedReducers.totalCases,
+    cases: state.feedReducers.cases,
+    timeline: state.feedReducers.timeline
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainDashboardComponent);
