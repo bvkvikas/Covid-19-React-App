@@ -14,7 +14,8 @@ const useStyles = makeStyles({
   },
   totalCases: {
     backgroundColor: 'rgba(255, 7, 58, 0.05)',
-    color: 'rgba(255, 7, 58)'
+    color: 'rgba(255, 7, 58)',
+    margin: '2% 2% 2% 2%'
   },
   activeCases: {
     backgroundColor: 'rgba(0, 0, 255, 0.05)',
@@ -38,13 +39,7 @@ const Cards = props => {
   return (
     <div className={styles.container}>
       <Grid container spacing={2} justify='center'>
-        <Grid
-          xs={12}
-          md={3}
-          item
-          component={Card}
-          className={cx(styles.card, styles.totalCases)}
-        >
+        <Grid xs={12} md={3} item component={Card} className={styles.card}>
           <CardContent className={cx(st.totalCases)}>
             <Typography className={st.heading}>Total Cases</Typography>
             <Typography variant='h5'>

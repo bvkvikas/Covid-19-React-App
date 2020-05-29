@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as actions from '../store/actions';
 
-import CountryListComponent from './CountryListComponent';
+import CountryListComponent from './List/CountryListComponent';
 import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
 import Cards from './Cards/Cards';
@@ -46,11 +46,13 @@ MainDashboardComponent.defaultProps = {
 
 function displayDashboard(cases, totalCases, timeline) {
   return (
-    <div className={styles.container}>
-      {/* <CountryListComponent data={cases} /> */}
-      <Cards data={totalCases} />
-      <Chart data={timeline} />
-      {/* <FeedComponent /> */}
+    <div className={styles.main}>
+      <CountryListComponent data={cases} />
+      <div className={styles.container}>
+        <Cards data={totalCases} />
+        <Chart data={timeline} />
+        {/* <FeedComponent /> */}
+      </div>
     </div>
   );
 }
