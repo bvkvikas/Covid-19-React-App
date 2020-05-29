@@ -41,7 +41,46 @@ function updateData(options) {
         });
       })
       .catch(error => console.log(error));
-  }, 120000);
+  }, 5000);
+}
+
+function updateTwitterFeedData(options) {
+  setInterval(() => {
+    fetchTwitterFeed()
+      .then(response => {
+        console.log(response);
+        pusher.trigger(options.channel, options.event, {
+          feed: response
+        });
+      })
+      .catch(error => console.log(error));
+  }, 12000);
+}
+
+async function fetchTwitterFeed() {
+  const req_token_url = constants.URL.TWITTER_REQ_TOKEN_URL;
+  const acc_token_url = constants.URL.TWITTER_ACCESS_TOKEN_URL;
+  const acc_key = process.env.TWITTER_ACC_KEY;
+  const sec_key = process.env.TWITTER_SEC_KEY;
+  const oauth_k = process.env.OAUTH;
+  const oauth_url = constants.URL.OAUTH_URL;
+  const oauth_sha = process.env.SHA_CONFIG;
+  const tweeter_api = constants.URL.TWITTER_API_WHO;
+  const api_key = process.env.API_KEY;
+  const api_s_key = process.env.API_S_KEY;
+
+  const oauth = new OAuth.OAuth(
+    req_token_url,
+    acc_token_url,
+    acc_key,
+    sec_key,
+    oauth_k,
+    oauth_url,
+    oauth_sha
+  );
+  const get = promisify(oauth.get.bind(oauth));
+  const result = await get(tweeter_api, api_key, api_s_key);
+  return JSON.parse(result);
 }
 
 app.get('/total_cases', (req, res) => {
