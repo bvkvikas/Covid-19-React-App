@@ -1,10 +1,16 @@
 import {
   GET_TOTAL_CASES_SUCCESS,
   GET_COUNTRYWISE_CASES_SUCCESS,
-  GET_COUNTRY_CASES_SUCCESS
+  GET_COUNTRY_CASES_SUCCESS,
+  GET_TIMELINE_SUCCESS
 } from '../actionTypes';
 
-const initialState = { totalCases: {}, cases: [], selectedCountry: '' };
+const initialState = {
+  totalCases: {},
+  cases: [],
+  selectedCountry: '',
+  timeline: []
+};
 
 export default function feedReducers(state = initialState, action) {
   switch (action.type) {
@@ -16,6 +22,10 @@ export default function feedReducers(state = initialState, action) {
     }
     case GET_COUNTRY_CASES_SUCCESS: {
       return { ...state, selectedCountry: action.response.data };
+    }
+    case GET_TIMELINE_SUCCESS: {
+      console.log(action.data);
+      return { ...state, timeline: action.data };
     }
     default: {
       return state;

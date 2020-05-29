@@ -1,9 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
+import _ from 'lodash';
 import {
   GET_TOTAL_CASES_SUCCESS,
   GET_COUNTRYWISE_CASES_SUCCESS,
-  GET_COUNTRY_CASES_SUCCESS
+  GET_COUNTRY_CASES_SUCCESS,
+  GET_TIMELINE_SUCCESS
 } from './actionTypes';
 
 function loadTotalCasesSuccess(response) {
@@ -16,6 +18,10 @@ function loadCountrywiseCasesSuccess(response) {
 
 function loadSpecificCountryCasesSuccess(response) {
   return { type: GET_COUNTRY_CASES_SUCCESS, response };
+}
+
+function loadTimeLineSuccess(response) {
+  return { type: GET_TIMELINE_SUCCESS, data: response };
 }
 
 export const getTotalCases = () => {
@@ -75,5 +81,57 @@ export const getSpecificCountryCases = country => {
       `https://corona.lmao.ninja/v2/countries/:${country}?yesterday=true&strict=true`
     );
     dispatch(loadSpecificCountryCasesSuccess(response));
+  };
+};
+
+export const getTimeLine = country => {
+  let url = 'https://covid19.mathdro.id/api/daily';
+  if (country) {
+    url = `https://corona.lmao.ninja/v2/historical/${country}?lastdays=150`;
+  }
+  return async dispatch => {
+    const response = await axios.get(url);
+
+    if (country) {
+      const { timeline } = response.data;
+      const { cases, deaths, recovered } = timeline;
+      const modifiedData = [];
+      _.forOwn(cases, function (num, key) {
+        const reportDate = {
+          reportDate: key,
+          confirmed: num
+        };
+        modifiedData.push(reportDate);
+      });
+      _.forOwn(deaths, function (num, key) {
+        const json = _.find(modifiedData, { reportDate: key });
+        json.Deaths = num;
+      });
+      _.forOwn(recovered, function (num, key) {
+        const json = _.find(modifiedData, { reportDate: key });
+        json.Recovered = num;
+      });
+      dispatch(
+        loadTimeLineSuccess(
+          modifiedData.map(({ reportDate, Deaths, confirmed, Recovered }) => ({
+            confirmed,
+            deaths: Deaths,
+            date: reportDate,
+            recovered: Recovered
+          }))
+        )
+      );
+    } else {
+      dispatch(
+        loadTimeLineSuccess(
+          response.data.map(({ reportDate, deaths, confirmed, recovered }) => ({
+            confirmed: confirmed.total,
+            deaths: deaths.total,
+            date: reportDate,
+            decovered: recovered.total
+          }))
+        )
+      );
+    }
   };
 };

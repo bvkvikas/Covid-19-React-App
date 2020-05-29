@@ -13,32 +13,49 @@ class CountryListItemComponent extends PureComponent {
   componentDidMount() {}
 
   render() {
-    const onSelectCountry = countryInfo => {};
+    const onSelectCountry = countryInfo => {
+      console.log(`Selected ${countryInfo}`);
+    };
     const {
       countryInfo: { countryName, cases, flag }
     } = this.props;
     return (
-      <>
-        <ListItem
-          button
-          alignItems='flex-start'
-          onClick={() => onSelectCountry(countryName)}
-        >
-          <ListItemAvatar>
-            <Avatar alt={countryName} src={flag} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={<Typography>{countryName}</Typography>}
-            secondary={
-              <Typography variant='body2'>
-                {`Total Cases:  ${cases}`}
+      <ListItem alignItems='flex-start'>
+        <ListItemAvatar>
+          <Avatar alt='Remy Sharp' src={flag} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <>
+              <Typography component='span' variant='body2' color='white'>
+                {countryName}
               </Typography>
-            }
-          />
-        </ListItem>
-        {/* <Divider variant='middle' component='li' className={classes.root} /> */}
-        <Divider variant='middle' component='li' />
-      </>
+            </>
+          }
+          secondary={cases}
+        />
+      </ListItem>
+      // <>
+      //   <ListItem
+      //     button
+      //     alignItems='flex-start'
+      //     onClick={() => onSelectCountry(countryName)}
+      //   >
+      //     <ListItemAvatar>
+      //       <Avatar alt={countryName} src={flag} />
+      //     </ListItemAvatar>
+      //     <ListItemText
+      //       primary={<Typography>{countryName}</Typography>}
+      //       secondary={
+      //         <Typography variant='body2'>
+      //           {`Total Cases:  ${cases}`}
+      //         </Typography>
+      //       }
+      //     />
+      //   </ListItem>
+      //   {/* <Divider variant='middle' component='li' className={classes.root} /> */}
+      //   <Divider variant='middle' component='li' />
+      // </>
     );
   }
 }

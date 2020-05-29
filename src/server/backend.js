@@ -18,7 +18,7 @@ const pusher = new Pusher({
 
 async function fetchData() {
   const response = await axios.get(
-    'https://corona.lmao.ninja/v2/countries?sort=cases'
+    'https://corona.lmao.ninja/v2/historical/India?lastdays=150'
   );
   // const {
   //   data: { country, cases, todayCases, deaths, recovered, active }
@@ -74,12 +74,31 @@ app.get('/all_countries', (req, res) => {
 app.get('/test', (req, res) => {
   fetchData()
     .then(response => {
-      res.json(
-        response.data.map(({ country, cases }) => ({
-          countryName: country,
-          cases
-        }))
-      );
+      console.log('Cases');
+      const { timeline } = response.data;
+      const { cases, deaths, recovered } = timeline;
+      const modifiedData = [];
+      console.log('Cases');
+      _.forOwn(cases, function (num, key) {
+        const reportDate = {
+          reportDate: key,
+          confirmed: num
+        };
+        modifiedData.push(reportDate);
+      });
+      console.log('Deaths');
+      _.forOwn(deaths, function (num, key) {
+        const json = _.find(modifiedData, { reportDate: key });
+        json.deaths = num;
+        modifiedData.push(json);
+      });
+      console.log('Recovered');
+      _.forOwn(recovered, function (num, key) {
+        const json = _.find(modifiedData, { reportDate: key });
+        json.recovered = num;
+        modifiedData.push(json);
+      });
+      res.json(modifiedData);
     })
     .catch(error => console.log(error));
 });
