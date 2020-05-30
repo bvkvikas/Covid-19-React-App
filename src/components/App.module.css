@@ -60,7 +60,7 @@ body {
     justify-content: center;
   }
   .container {
-    display: flex;
+    display: inline;
     align-items: center;
     flex-direction: column;
     justify-content: center;
