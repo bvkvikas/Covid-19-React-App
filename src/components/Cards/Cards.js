@@ -14,8 +14,7 @@ const useStyles = makeStyles({
   },
   totalCases: {
     backgroundColor: 'rgba(255, 7, 58, 0.05)',
-    color: 'rgba(255, 7, 58)',
-    margin: '2% 2% 2% 2%'
+    color: 'rgba(255, 7, 58)'
   },
   activeCases: {
     backgroundColor: 'rgba(0, 0, 255, 0.05)',

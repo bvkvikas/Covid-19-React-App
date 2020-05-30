@@ -21,10 +21,13 @@ export default function feedReducers(state = initialState, action) {
       return { ...state, cases: action.data };
     }
     case GET_COUNTRY_CASES_SUCCESS: {
-      return { ...state, selectedCountry: action.response.data };
+      return {
+        ...state,
+        selectedCountry: action.country,
+        totalCases: action.data
+      };
     }
     case GET_TIMELINE_SUCCESS: {
-      console.log(action.data);
       return { ...state, timeline: action.data };
     }
     default: {

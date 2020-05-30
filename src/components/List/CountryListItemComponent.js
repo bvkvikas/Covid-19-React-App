@@ -1,19 +1,20 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { ListItem, ListItemText } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from '../../store/actions';
+import * as action from '../../store/actions';
 
-class CountryListItemComponent extends PureComponent {
+class CountryListItemComponent extends Component {
   componentDidMount() {}
 
-  onSelectCountry = countryInfo => {
-    console.log(`Selected ${countryInfo}`);
+  onSelectCountry = countryName => {
+    const { actions } = this.props;
+    actions.getSpecificCountryCases(countryName);
+    actions.getTimeLine(countryName);
   };
 
   render() {
@@ -47,17 +48,13 @@ class CountryListItemComponent extends PureComponent {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    cases: state.feedReducers.cases
-  };
-}
+const mapStateToProps = state => ({
+  cases: state.feedReducers.cases
+});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(action, dispatch)
+});
 
 export default connect(
   mapStateToProps,

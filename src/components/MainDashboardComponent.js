@@ -16,6 +16,7 @@ import styles from './App.module.css';
 
 class MainDashboardComponent extends PureComponent {
   render() {
+    console.log(this.props);
     const { cases, totalCases } = this.props;
     return (
       <div>
@@ -58,28 +59,28 @@ function displayDashboard(cases, totalCases, timeline) {
 }
 
 MainDashboardComponent.propTypes = {
-  cases: PropTypes.instanceOf(Array),
+  cases: PropTypes.instanceOf(Object),
   totalCases: PropTypes.instanceOf(Object)
 };
 
 MainDashboardComponent.defaultProps = {
-  cases: [],
+  cases: {},
   totalCases: {}
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     totalCases: state.feedReducers.totalCases,
     cases: state.feedReducers.cases,
     timeline: state.feedReducers.timeline
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
-}
+};
 
 export default connect(
   mapStateToProps,
