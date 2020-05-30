@@ -2,18 +2,26 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Toolbar, Typography, Paper, Grid, AppBar } from '@material-ui/core';
-import * as actions from '../store/actions';
+import { Toolbar, Typography, Button, Grid, AppBar } from '@material-ui/core';
+import cx from 'classnames';
+import * as Actions from '../store/actions';
 import CountryListComponent from './List/CountryListComponent';
 import LogoComponent from './LogoComponent';
 import Cards from './Cards/Cards';
 import Chart from './Charts/Chart';
 import Heading from './Heading/Heading';
 import CountryPicker from './CountryPicker/CountryPicker';
+import 'typeface-roboto';
 
 import styles from './App.module.css';
 
 class MainDashboardComponent extends PureComponent {
+  onGlobalButtonClick = () => {
+    const { actions } = this.props;
+    actions.getTotalCases();
+    actions.getTimeLine('Global');
+  };
+
   render() {
     const { cases, totalCases, selectedCountry } = this.props;
     return (
@@ -35,6 +43,16 @@ class MainDashboardComponent extends PureComponent {
         <div className={styles.main}>
           <Grid container className={styles.gridContainer}>
             <Grid item xs={6} sm={2} className={styles.countryList}>
+              <div className={styles.globalButton}>
+                <Button
+                  onClick={() => this.onGlobalButtonClick()}
+                  variant='outlined'
+                  color='primary'
+                  className={cx(styles.globalButton)}
+                >
+                  Global Cases
+                </Button>
+              </div>
               <CountryListComponent data={cases} />
             </Grid>
             <Grid item xs={12} sm={10}>
@@ -82,7 +100,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(Actions, dispatch)
   };
 };
 
