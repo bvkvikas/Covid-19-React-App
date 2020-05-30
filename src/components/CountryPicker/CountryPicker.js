@@ -19,7 +19,11 @@ class CountryPicker extends Component {
 
   updateData = country => {
     const { actions } = this.props;
-    actions.getSpecificCountryCases(country);
+    if (country === 'Global') {
+      actions.getTotalCases();
+    } else {
+      actions.getSpecificCountryCases(country);
+    }
     actions.getTimeLine(country);
   };
 
