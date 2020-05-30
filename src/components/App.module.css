@@ -73,6 +73,11 @@ body {
   .extraToolbar2 {
     display: block;
   }
+  .countryPicker {
+    width: 90%;
+    display: flex;
+    margin: 30% 2% 2% 2%;
+  }
 }
 
 @media only screen and (max-height: 850px) {
