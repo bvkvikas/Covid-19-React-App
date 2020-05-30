@@ -102,13 +102,13 @@ export function getCountrywiseCases() {
 
 export const getTimeLine = country => {
   let url = 'https://covid19.mathdro.id/api/daily';
-  if (country) {
+  if (country !== 'Global') {
     url = `https://corona.lmao.ninja/v2/historical/${country}?lastdays=150`;
   }
   return async dispatch => {
     const response = await axios.get(url);
 
-    if (country) {
+    if (country !== 'Global') {
       const { timeline } = response.data;
       const { cases, deaths, recovered } = timeline;
       const modifiedData = [];

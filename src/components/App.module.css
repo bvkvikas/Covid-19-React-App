@@ -11,8 +11,11 @@ body {
   height: 93vh;
 }
 
-.main {
-  flex-grow: 1;
+.extraToolbar2 {
+  display: none;
+}
+.extraToolbar1 {
+  display: none;
 }
 .paper {
   background-color: 'rgba(119, 119, 119,0.5)';
@@ -24,15 +27,17 @@ body {
 }
 
 .countryName {
-  flex-grow: 1;
-  background-color: salmon;
   display: flex;
 }
-
-@media only screen and (max-width: 770px) {
+.countryPicker {
+  flex-grow: 1;
+  display: none;
+}
+@media only screen and (max-width: 936px) {
   .countryList {
     display: none;
   }
+
   .gridContainer {
     width: 100%;
     display: flex;
@@ -40,5 +45,38 @@ body {
     box-sizing: border-box;
     align-items: center;
     justify-content: center;
+  }
+  .countryPicker {
+    flex-grow: 1;
+    width: 80%;
+    display: flex;
+    margin: 1%;
+    align-items: center;
+    justify-content: center;
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .main {
+    margin: 2%;
+  }
+}
+
+@media only screen and (max-height: 780px) {
+  .extraToolbar1 {
+    display: block;
+    margin: 1%;
+  }
+  .extraToolbar2 {
+    display: block;
+  }
+}
+
+@media only screen and (max-height: 850px) {
+  .extraToolbar2 {
+    display: block;
   }
 }

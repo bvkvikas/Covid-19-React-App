@@ -9,6 +9,7 @@ import LogoComponent from './LogoComponent';
 import Cards from './Cards/Cards';
 import Chart from './Charts/Chart';
 import Heading from './Heading/Heading';
+import CountryPicker from './CountryPicker/CountryPicker';
 
 import styles from './App.module.css';
 
@@ -17,7 +18,7 @@ class MainDashboardComponent extends PureComponent {
     const { cases, totalCases, selectedCountry } = this.props;
     return (
       <div className={styles.root}>
-        <AppBar position='static'>
+        <AppBar position='sticky'>
           <Toolbar>
             <LogoComponent />
             <Typography className={styles.title} variant='h5' noWrap>
@@ -25,8 +26,29 @@ class MainDashboardComponent extends PureComponent {
             </Typography>
           </Toolbar>
         </AppBar>
-
-        {displayDashboard(cases, totalCases, selectedCountry)}
+        <div className={styles.extraToolbar1}>
+          <Toolbar />
+        </div>
+        <div className={styles.extraToolbar2}>
+          <Toolbar />
+        </div>
+        <div className={styles.main}>
+          <Grid container className={styles.gridContainer}>
+            <Grid item xs={6} sm={2} className={styles.countryList}>
+              <CountryListComponent data={cases} />
+            </Grid>
+            <Grid item xs={12} sm={10}>
+              <div className={styles.container}>
+                <div className={styles.countryPicker}>
+                  <CountryPicker data={cases} />
+                </div>
+                <Heading title={selectedCountry} />
+                <Cards data={totalCases} />
+                <Chart />
+              </div>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     );
   }
@@ -39,25 +61,6 @@ MainDashboardComponent.propTypes = {
 MainDashboardComponent.defaultProps = {
   cases: 0
 };
-
-function displayDashboard(cases, totalCases, title) {
-  return (
-    <div className={styles.main}>
-      <Grid container className={styles.gridContainer}>
-        <Grid item xs={6} sm={2} className={styles.countryList}>
-          <CountryListComponent data={cases} />
-        </Grid>
-        <Grid item xs={12} sm={10}>
-          <div className={styles.container}>
-            <Heading title={title} />
-            <Cards data={totalCases} />
-            <Chart />
-          </div>
-        </Grid>
-      </Grid>
-    </div>
-  );
-}
 
 MainDashboardComponent.propTypes = {
   cases: PropTypes.instanceOf(Object),

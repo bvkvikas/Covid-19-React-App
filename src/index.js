@@ -15,14 +15,14 @@ const store = configureStore();
 
 store.dispatch(getTotalCases());
 store.dispatch(getCountrywiseCases());
-store.dispatch(getTimeLine());
+store.dispatch(getTimeLine('Global'));
 
 ReactDOM.render(
   // eslint-disable-next-line react/jsx-filename-extension
   <Provider store={store}>
-    <React.StrictMode>
+    <>
       <App />
-    </React.StrictMode>
+    </>
   </Provider>,
   document.getElementById('root')
 );
