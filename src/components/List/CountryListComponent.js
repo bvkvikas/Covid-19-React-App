@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     backgroundColor: 'rgba(119, 119, 119,0.05)'
   },
   paper: {
-    height: '80vh',
+    height: '91vh',
     overflow: 'auto'
   }
 });

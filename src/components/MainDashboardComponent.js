@@ -3,11 +3,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
+import { Grid } from '@material-ui/core';
 import * as actions from '../store/actions';
-
 import CountryListComponent from './List/CountryListComponent';
-import FeedComponent from './FeedComponent';
 import LogoComponent from './LogoComponent';
 import Cards from './Cards/Cards';
 import Chart from './Charts/Chart';
@@ -19,19 +20,17 @@ class MainDashboardComponent extends PureComponent {
     console.log(this.props);
     const { cases, totalCases } = this.props;
     return (
-      <div>
-        <Navbar bg='dark' variant='dark'>
-          <Navbar.Brand href='#home'>
+      <div className={styles.root}>
+        <AppBar position='static'>
+          <Toolbar>
             <LogoComponent />
-            COVID-19
-          </Navbar.Brand>
-        </Navbar>
-        <br />
-        {cases.length > 0 ? (
-          displayDashboard(cases, totalCases)
-        ) : (
-          <CircularProgress />
-        )}
+            <Typography className={styles.title} variant='h4' noWrap>
+              COVID-19 Cases Tracker
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+        {displayDashboard(cases, totalCases)}
       </div>
     );
   }
@@ -45,14 +44,21 @@ MainDashboardComponent.defaultProps = {
   cases: 0
 };
 
-function displayDashboard(cases, totalCases, timeline) {
+function displayDashboard(cases, totalCases) {
   return (
     <div className={styles.main}>
-      <CountryListComponent data={cases} />
-      <div className={styles.container}>
-        <Cards data={totalCases} />
-        <Chart data={timeline} />
-        {/* <FeedComponent /> */}
+      <div>
+        <Grid container className={styles.gridContainer}>
+          <Grid item xs={6} sm={2} className={styles.countryList}>
+            <CountryListComponent data={cases} />
+          </Grid>
+          <Grid item xs={12} sm={10}>
+            <div className={styles.container}>
+              <Cards data={totalCases} />
+              <Chart />
+            </div>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

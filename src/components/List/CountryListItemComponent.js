@@ -3,6 +3,7 @@ import { ListItem, ListItemText } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -23,25 +24,30 @@ class CountryListItemComponent extends Component {
     } = this.props;
     return (
       <>
-        <ListItem
-          button
-          alignItems='flex-start'
-          onClick={() => this.onSelectCountry(countryName)}
-        >
-          <ListItemAvatar>
-            <Avatar alt='Remy Sharp' src={flag} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={
-              <>
-                <Typography component='span' variant='body2'>
-                  {countryName}
-                </Typography>
-              </>
-            }
-            secondary={cases}
-          />
-        </ListItem>
+        {countryName ? (
+          <ListItem
+            button
+            alignItems='flex-start'
+            onClick={() => this.onSelectCountry(countryName)}
+          >
+            <ListItemAvatar>
+              <Avatar alt='Remy Sharp' src={flag} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={
+                <>
+                  <Typography component='span' variant='body2'>
+                    {countryName}
+                  </Typography>
+                </>
+              }
+              secondary={cases}
+            />
+          </ListItem>
+        ) : (
+          <LinearProgress />
+        )}
+
         <Divider />
       </>
     );

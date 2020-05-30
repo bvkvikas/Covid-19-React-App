@@ -1,5 +1,11 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  CircularProgress
+} from '@material-ui/core';
 import CountUp from 'react-countup';
 import cx from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,7 +48,11 @@ const Cards = props => {
           <CardContent className={cx(st.totalCases)}>
             <Typography className={st.heading}>Total Cases</Typography>
             <Typography variant='h5'>
-              <CountUp start={0} end={cases} duration={1.8} separator=',' />
+              {cases ? (
+                <CountUp start={0} end={cases} duration={1.8} separator=',' />
+              ) : (
+                <CircularProgress />
+              )}
             </Typography>
             <Typography color='textSecondary'>
               {`Last Updated : ${new Date(updated).toDateString()}`}
@@ -59,7 +69,11 @@ const Cards = props => {
           <CardContent className={cx(st.activeCases)}>
             <Typography className={st.heading}>Active Cases</Typography>
             <Typography variant='h5'>
-              <CountUp start={0} end={active} duration={1.5} separator=',' />
+              {active ? (
+                <CountUp start={0} end={active} duration={1.5} separator=',' />
+              ) : (
+                <CircularProgress />
+              )}
             </Typography>
             <Typography color='textSecondary'>
               {`Last Updated : ${new Date(updated).toDateString()}`}
@@ -76,7 +90,16 @@ const Cards = props => {
           <CardContent className={cx(st.recovered)}>
             <Typography className={st.heading}>Recovered</Typography>
             <Typography variant='h5'>
-              <CountUp start={0} end={recovered} duration={1.5} separator=',' />
+              {recovered ? (
+                <CountUp
+                  start={0}
+                  end={recovered}
+                  duration={1.5}
+                  separator=','
+                />
+              ) : (
+                <CircularProgress />
+              )}
             </Typography>
             <Typography color='textSecondary'>
               {`Last Updated : ${new Date(updated).toDateString()}`}
@@ -93,7 +116,11 @@ const Cards = props => {
           <CardContent className={cx(st.deceased)}>
             <Typography className={st.heading}>Total Deaths</Typography>
             <Typography variant='h5'>
-              <CountUp start={0} end={deaths} duration={1.5} separator=',' />
+              {deaths ? (
+                <CountUp start={0} end={deaths} duration={1.5} separator=',' />
+              ) : (
+                <CircularProgress />
+              )}
             </Typography>
             <Typography color='textSecondary'>
               {`Last Updated : ${new Date(updated).toDateString()}`}
