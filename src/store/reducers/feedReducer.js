@@ -8,7 +8,7 @@ import {
 const initialState = {
   totalCases: {},
   cases: [],
-  selectedCountry: '',
+  selectedCountry: 'Global',
   timeline: []
 };
 

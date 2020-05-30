@@ -23,6 +23,12 @@ body {
   text-align: center;
 }
 
+.countryName {
+  flex-grow: 1;
+  background-color: salmon;
+  display: flex;
+}
+
 @media only screen and (max-width: 770px) {
   .countryList {
     display: none;
