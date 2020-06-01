@@ -1,36 +1,72 @@
 import React, { PureComponent } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import * as actions from '../store/actions';
-
-import CountryListComponent from './CountryListComponent';
-import FeedComponent from './FeedComponent';
+import { Toolbar, Typography, Button, Grid, AppBar } from '@material-ui/core';
+import cx from 'classnames';
+import * as Actions from '../store/actions';
+import CountryListComponent from './List/CountryListComponent';
 import LogoComponent from './LogoComponent';
 import Cards from './Cards/Cards';
 import Chart from './Charts/Chart';
+import Heading from './Heading/Heading';
+import CountryPicker from './CountryPicker/CountryPicker';
+import 'typeface-roboto';
 
 import styles from './App.module.css';
 
 class MainDashboardComponent extends PureComponent {
+  onGlobalButtonClick = () => {
+    const { actions } = this.props;
+    actions.getTotalCases();
+    actions.getTimeLine('Global');
+  };
+
   render() {
-    const { cases, totalCases } = this.props;
+    const { cases, totalCases, selectedCountry } = this.props;
     return (
-      <div>
-        <Navbar bg='dark' variant='dark'>
-          <Navbar.Brand href='#home'>
+      <div className={styles.root}>
+        <AppBar position='sticky'>
+          <Toolbar>
             <LogoComponent />
-            COVID-19
-          </Navbar.Brand>
-        </Navbar>
-        <br />
-        {cases.length > 0 ? (
-          displayDashboard(cases, totalCases)
-        ) : (
-          <CircularProgress />
-        )}
+            <Typography className={styles.title} variant='h5' noWrap>
+              COVID-19 Cases Tracker
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div className={styles.extraToolbar1}>
+          <Toolbar />
+        </div>
+        <div className={styles.extraToolbar2}>
+          <Toolbar />
+        </div>
+        <div className={styles.main}>
+          <Grid container className={styles.gridContainer}>
+            <Grid item xs={6} sm={2} className={styles.countryList}>
+              <div className={styles.globalButton}>
+                <Button
+                  onClick={() => this.onGlobalButtonClick()}
+                  variant='outlined'
+                  color='primary'
+                  className={cx(styles.globalButton)}
+                >
+                  Global Cases
+                </Button>
+              </div>
+              <CountryListComponent data={cases} />
+            </Grid>
+            <Grid item xs={12} sm={10}>
+              <div className={styles.container}>
+                <div className={styles.countryPicker}>
+                  <CountryPicker data={cases} />
+                </div>
+                <Heading title={selectedCountry} />
+                <Cards data={totalCases} />
+                <Chart />
+              </div>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     );
   }
@@ -44,40 +80,29 @@ MainDashboardComponent.defaultProps = {
   cases: 0
 };
 
-function displayDashboard(cases, totalCases, timeline) {
-  return (
-    <div className={styles.container}>
-      {/* <CountryListComponent data={cases} /> */}
-      <Cards data={totalCases} />
-      <Chart data={timeline} />
-      {/* <FeedComponent /> */}
-    </div>
-  );
-}
-
 MainDashboardComponent.propTypes = {
-  cases: PropTypes.instanceOf(Array),
+  cases: PropTypes.instanceOf(Object),
   totalCases: PropTypes.instanceOf(Object)
 };
 
 MainDashboardComponent.defaultProps = {
-  cases: [],
+  cases: {},
   totalCases: {}
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     totalCases: state.feedReducers.totalCases,
     cases: state.feedReducers.cases,
-    timeline: state.feedReducers.timeline
+    selectedCountry: state.feedReducers.selectedCountry
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(Actions, dispatch)
   };
-}
+};
 
 export default connect(
   mapStateToProps,

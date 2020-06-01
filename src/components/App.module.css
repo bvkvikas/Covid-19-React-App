@@ -5,6 +5,88 @@ body {
 .container {
   display: flex;
   align-items: center;
-
   flex-direction: column;
+  justify-content: center;
+  margin-left: 1%;
+  height: 93vh;
+}
+
+.extraToolbar2 {
+  display: none;
+}
+.extraToolbar1 {
+  display: none;
+}
+.paper {
+  background-color: 'rgba(119, 119, 119,0.5)';
+  overflow: 'auto';
+}
+.title {
+  flex-grow: 1;
+  text-align: center;
+  font-family: 'typeface-roboto';
+}
+
+.countryName {
+  display: flex;
+}
+.countryPicker {
+  flex-grow: 1;
+  display: none;
+}
+.globalButton {
+  margin: 5% 0% 5% 0%;
+  width: 100%;
+}
+@media only screen and (max-width: 936px) {
+  .countryList {
+    display: none;
+  }
+
+  .gridContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+  }
+  .countryPicker {
+    flex-grow: 1;
+    width: 80%;
+    display: flex;
+    margin: 1%;
+    align-items: center;
+    justify-content: center;
+  }
+  .container {
+    display: inline;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .main {
+    margin: 2%;
+  }
+}
+
+@media only screen and (max-height: 780px) {
+  .extraToolbar1 {
+    display: block;
+    margin: 1%;
+  }
+  .extraToolbar2 {
+    display: block;
+  }
+  .countryPicker {
+    width: 90%;
+    display: flex;
+    margin: 30% 2% 2% 2%;
+  }
+}
+
+@media only screen and (max-height: 850px) {
+  .extraToolbar2 {
+    display: block;
+  }
 }

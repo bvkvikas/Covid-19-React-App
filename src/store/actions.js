@@ -16,8 +16,8 @@ function loadCountrywiseCasesSuccess(response) {
   return { type: GET_COUNTRYWISE_CASES_SUCCESS, data: response };
 }
 
-function loadSpecificCountryCasesSuccess(response) {
-  return { type: GET_COUNTRY_CASES_SUCCESS, response };
+function loadSpecificCountryCasesSuccess(response, country) {
+  return { type: GET_COUNTRY_CASES_SUCCESS, country, data: response };
 }
 
 function loadTimeLineSuccess(response) {
@@ -39,6 +39,31 @@ export const getTotalCases = () => {
         recovered,
         updated: new Date(updated).toString()
       })
+    );
+  };
+};
+
+export const getSpecificCountryCases = country => {
+  return async dispatch => {
+    const response = await axios.get(
+      `https://corona.lmao.ninja/v2/countries/${country}?strict=true`
+    );
+
+    const {
+      data: { cases, active, deaths, updated, recovered }
+    } = response;
+
+    dispatch(
+      loadSpecificCountryCasesSuccess(
+        {
+          cases,
+          active,
+          deaths,
+          recovered,
+          updated: new Date(updated).toString()
+        },
+        country
+      )
     );
   };
 };
@@ -75,24 +100,15 @@ export function getCountrywiseCases() {
   };
 }
 
-export const getSpecificCountryCases = country => {
-  return async dispatch => {
-    const response = await axios.get(
-      `https://corona.lmao.ninja/v2/countries/:${country}?yesterday=true&strict=true`
-    );
-    dispatch(loadSpecificCountryCasesSuccess(response));
-  };
-};
-
 export const getTimeLine = country => {
   let url = 'https://covid19.mathdro.id/api/daily';
-  if (country) {
+  if (country !== 'Global') {
     url = `https://corona.lmao.ninja/v2/historical/${country}?lastdays=150`;
   }
   return async dispatch => {
     const response = await axios.get(url);
 
-    if (country) {
+    if (country !== 'Global') {
       const { timeline } = response.data;
       const { cases, deaths, recovered } = timeline;
       const modifiedData = [];
